@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.FOMC.Types.FOMCItem;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.FishingRodHandler;
@@ -80,7 +80,7 @@ public class EquipmentHud {
         drawContext.fill(x, y, x + 20, y + 20, alpha);
 
         int borderColor = alpha | 0xFFFFFF;
-        Constant rarity = Constant.DEFAULT;
+        Rarity rarity = Rarity.UNKNOWN;
 
         if (equipmentType != null) {
             switch (equipmentType) {
@@ -104,7 +104,7 @@ public class EquipmentHud {
             rarity = FOMCItem.getRarity(itemStack);
         }
 
-        if (rarity != Constant.DEFAULT) {
+        if (rarity != Rarity.UNKNOWN) {
             borderColor = (alpha & 0xFF000000) | (rarity.COLOR & 0x00FFFFFF);
         }
 

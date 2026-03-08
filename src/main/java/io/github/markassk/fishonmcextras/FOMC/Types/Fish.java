@@ -1,7 +1,10 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishSize;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishVariant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import io.github.markassk.fishonmcextras.util.UUIDHelper;
 import net.minecraft.component.DataComponentTypes;
@@ -20,13 +23,13 @@ public class Fish extends FOMCItem {
     public final CustomModelDataComponent customModelData;
     public final String fishId; // fish
     public final String scientific; // scientific
-    public final Constant variant; // variant
+    public final FishVariant variant; // variant
 
     public final float value; // value
     public final float xp;
     public final String natureId; // nature
-    public final Constant location; // location
-    public final Constant size; // size
+    public final Location location; // location
+    public final FishSize size; // size
     public final String sex; // sex
     public final float weight; // weight in lb
     public final float length; // length in in
@@ -42,21 +45,21 @@ public class Fish extends FOMCItem {
     public final String rodName; // rod
 
     private Fish(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData, String name) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id"));
         this.customModelData = customModelData;
         this.fishId = nbtCompound.getString("fish");
         this.scientific = nbtCompound.getString("scientific");
         String variantString = nbtCompound.getString("variant");
-        this.variant = Constant.valueOfId(variantString);
-        if (!variantString.isEmpty() && this.variant == Constant.DEFAULT && !variantString.equals("normal")) {
+        this.variant = FishVariant.LOOKUP.valueOfId(variantString);
+        if (!variantString.isEmpty() && this.variant == FishVariant.UNKNOWN) {
             FishOnMCExtras.LOGGER.warn("[FoE] Unknown variant string: '{}' for fish: {}", variantString, this.fishId);
         }
         this.value = nbtCompound.getFloat("value");
         this.xp = nbtCompound.getFloat("xp");
         this.natureId = nbtCompound.getString("nature");
-        this.location = Constant.valueOfId(nbtCompound.getString("location"));
-        this.size = Constant.valueOfId(nbtCompound.getString("size"));
+        this.location = Location.LOOKUP.valueOfId(nbtCompound.getString("location"));
+        this.size = FishSize.LOOKUP.valueOfId(nbtCompound.getString("size"));
         this.sex = nbtCompound.getString("sex");
         this.weight = nbtCompound.getFloat("weight");
         this.length = nbtCompound.getFloat("length");
@@ -96,13 +99,13 @@ public class Fish extends FOMCItem {
         return null;
     }
 
-    public static Constant getSize(ItemStack itemStack) {
+    public static FishSize getSize(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.CUSTOM_DATA) != null) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if(nbtCompound != null) {
-                return Constant.valueOfId(nbtCompound.getString("size"));
+                return FishSize.LOOKUP.valueOfId(nbtCompound.getString("size"));
             }
         }
-        return Constant.DEFAULT;
+        return FishSize.UNKNOWN;
     }
 }

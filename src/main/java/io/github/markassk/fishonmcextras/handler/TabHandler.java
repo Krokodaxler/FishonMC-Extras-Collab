@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 import io.github.markassk.fishonmcextras.FOMC.Types.Defaults;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
@@ -19,7 +19,7 @@ public class TabHandler {
     private final FishOnMCExtrasConfig config = FishOnMCExtrasConfig.getConfig();
 
     public Text player = Text.empty();
-    public Constant rank = Constant.DEFAULT;
+    public PlayerRank rank = PlayerRank.UNKNOWN;
     public String instance = "";
     public boolean isInstance = false;
 
@@ -40,7 +40,7 @@ public class TabHandler {
                     this.player = playerListHud
                             .getPlayerName(Objects.requireNonNull(minecraftClient.getNetworkHandler())
                                     .getPlayerListEntry(minecraftClient.player.getUuid()));
-                    this.rank = getRank(this.player.getString());
+                    this.rank = PlayerRank.LOOKUP.findContainingTag(this.player.getString());
                 }
 
                 if (((PlayerListHudAccessor) playerListHud).getFooter() != null) {
@@ -70,10 +70,10 @@ public class TabHandler {
                         if (displayName != null
                                 && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
                             if (config.fun.isFoeTagPrefix) {
-                                displayName = Constant.FOE.TAG.copy()
+                                displayName = PlayerRank.FOE.TAG.copy()
                                         .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
                             } else {
-                                displayName = displayName.copy().append(Text.literal(" ").append(Constant.FOE.TAG));
+                                displayName = displayName.copy().append(Text.literal(" ").append(PlayerRank.FOE.TAG));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.crewMembers
@@ -99,10 +99,10 @@ public class TabHandler {
                         if (displayName != null
                                 && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
                             if (config.fun.isFoeTagPrefix) {
-                                displayName = Constant.FOE.TAG.copy()
+                                displayName = PlayerRank.FOE.TAG.copy()
                                         .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
                             } else {
-                                displayName = displayName.copy().append(Text.literal(" ").append(Constant.FOE.TAG));
+                                displayName = displayName.copy().append(Text.literal(" ").append(PlayerRank.FOE.TAG));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.crewMembers
@@ -132,10 +132,10 @@ public class TabHandler {
                         if (displayName != null
                                 && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
                             if (config.fun.isFoeTagPrefix) {
-                                displayName = Constant.FOE.TAG.copy()
+                                displayName = PlayerRank.FOE.TAG.copy()
                                         .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
                             } else {
-                                displayName = displayName.copy().append(Text.literal(" ").append(Constant.FOE.TAG));
+                                displayName = displayName.copy().append(Text.literal(" ").append(PlayerRank.FOE.TAG));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.friends
@@ -161,10 +161,10 @@ public class TabHandler {
                         if (displayName != null
                                 && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
                             if (config.fun.isFoeTagPrefix) {
-                                displayName = Constant.FOE.TAG.copy()
+                                displayName = PlayerRank.FOE.TAG.copy()
                                         .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
                             } else {
-                                displayName = displayName.copy().append(Text.literal(" ").append(Constant.FOE.TAG));
+                                displayName = displayName.copy().append(Text.literal(" ").append(PlayerRank.FOE.TAG));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.friends
@@ -198,33 +198,5 @@ public class TabHandler {
             return playerListEntry != null ? playerListEntry.getProfile().getName() : null;
         }
         return null;
-    }
-
-    private Constant getRank(String player) {
-        if (player.contains(Constant.ANGLER.TAG.getString()))
-            return Constant.ANGLER;
-        if (player.contains(Constant.SAILOR.TAG.getString()))
-            return Constant.SAILOR;
-        if (player.contains(Constant.MARINER.TAG.getString()))
-            return Constant.MARINER;
-        if (player.contains(Constant.CAPTAIN.TAG.getString()))
-            return Constant.CAPTAIN;
-        if (player.contains(Constant.ADMIRAL.TAG.getString()))
-            return Constant.ADMIRAL;
-        if (player.contains(Constant.STAFF.TAG.getString()))
-            return Constant.STAFF;
-        if (player.contains(Constant.DESIGNER.TAG.getString()))
-            return Constant.DESIGNER;
-        if (player.contains(Constant.BUILDER.TAG.getString()))
-            return Constant.BUILDER;
-        if (player.contains(Constant.MANAGER.TAG.getString()))
-            return Constant.MANAGER;
-        if (player.contains(Constant.ADMIN.TAG.getString()))
-            return Constant.ADMIN;
-        if (player.contains(Constant.OWNER.TAG.getString()))
-            return Constant.OWNER;
-        if (player.contains(Constant.COMMUNITYMANAGER.TAG.getString()))
-            return Constant.COMMUNITYMANAGER;
-        return Constant.DEFAULT;
     }
 }

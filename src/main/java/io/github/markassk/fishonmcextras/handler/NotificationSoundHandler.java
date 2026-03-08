@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.sound.SoundCategory;
@@ -8,7 +8,6 @@ import net.minecraft.sound.SoundEvents;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class NotificationSoundHandler {
     private static NotificationSoundHandler INSTANCE = new NotificationSoundHandler();
@@ -35,8 +34,8 @@ public class NotificationSoundHandler {
                 if(config.petEquipTracker.warningOptions.showPetEquipWarningHUD
                         && config.petEquipTracker.warningOptions.usePetEquipWarningSound
                         && PetEquipHandler.instance().petStatus == PetEquipHandler.PetStatus.NO_PET
-                        && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                        && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                        && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                        && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
                 ) {
                     if(System.currentTimeMillis() - lastPlayedSoundTime.get(NotificationType.PET_EQUIP) > config.petEquipTracker.warningOptions.timePetEquipWarningSound * 1000L) {
                         playSoundWarning(config.petEquipTracker.warningOptions.petEquipSoundType, minecraftClient);
@@ -48,8 +47,8 @@ public class NotificationSoundHandler {
                 if(config.fullInventoryTracker.showFullInventoryWarningHUD
                         && config.fullInventoryTracker.useInventoryWarningSound
                         && FullInventoryHandler.instance().isOverThreshold
-                        && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                        && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                        && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                        && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
                 ) {
                     if(System.currentTimeMillis() - lastPlayedSoundTime.get(NotificationType.INVENTORY_FULL) > config.fullInventoryTracker.timeInventoryWarningSound * 1000L) {
                         playSoundWarning(config.fullInventoryTracker.fullInventorySoundType, minecraftClient);

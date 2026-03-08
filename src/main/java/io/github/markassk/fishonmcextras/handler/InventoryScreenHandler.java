@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 import io.github.markassk.fishonmcextras.FOMC.LevelColors;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.mixin.RecipeBookScreenAccessor;
@@ -137,7 +138,7 @@ public class InventoryScreenHandler {
                                 Text.literal("Toggles crew chat on and off.").formatted(Formatting.GRAY, Formatting.ITALIC)
                         )), minecraftClient));
 
-                if(BossBarHandler.instance().currentLocation == Constant.CREW_ISLAND) {
+                if(BossBarHandler.instance().currentLocation == Location.CREW_ISLAND) {
                     clickableWidgets.add(assembleCrewButton(buttonSize * 2, buttonSize, Text.literal("↑"), "crew fly", Tooltip.of(
                             TextHelper.concat(
                                     Text.literal("Crew Fly\n").formatted(Formatting.BOLD, Formatting.WHITE),
@@ -188,7 +189,7 @@ public class InventoryScreenHandler {
                             Text.literal("The Artisan lets you upgrade your rod parts\n").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.ANGLER.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.ANGLER.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( -buttonSize * 2, 0, Text.literal("\uF015"), "identifier", Tooltip.of(
                     TextHelper.concat(
@@ -196,7 +197,7 @@ public class InventoryScreenHandler {
                             Text.literal("The Identifier gives unidentified armor its quality.\n").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( -buttonSize * 1, 0, Text.literal("\uF013"), "forge", Tooltip.of(
                     TextHelper.concat(
@@ -204,7 +205,7 @@ public class InventoryScreenHandler {
                             Text.literal("The Forge is where you upgrade both armour tiers and supercharges tiers.\n").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( buttonSize * 0, 0, Text.literal("\uF020"), "scrapper", Tooltip.of(
                     TextHelper.concat(
@@ -212,7 +213,7 @@ public class InventoryScreenHandler {
                             Text.literal("The Scrapper lets you scrap unwanted common armor.\n").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.SAILOR.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( buttonSize * 1, 0, Text.literal("\uF012"), "sell", Tooltip.of(
                     TextHelper.concat(
@@ -220,7 +221,7 @@ public class InventoryScreenHandler {
                             Text.literal("The Fish Merchant is where you sell your fish.\n").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.MARINER.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.MARINER.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( buttonSize * 2, 0, Text.literal("★").formatted(Formatting.YELLOW, Formatting.BOLD), "calibrator", Tooltip.of(
                     TextHelper.concat(
@@ -228,7 +229,7 @@ public class InventoryScreenHandler {
                             Text.literal("Calibrate your rod parts with extra stats.").formatted(Formatting.GRAY, Formatting.ITALIC),
                             Text.literal("\n"),
                             Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                            Text.literal(Constant.MARINER.TAG.getString()).formatted(Formatting.WHITE)
+                            Text.literal(PlayerRank.MARINER.TAG.getString()).formatted(Formatting.WHITE)
                     )), minecraftClient));
             clickableWidgets.add(assembleButton( buttonSize * 3, 0, Text.literal("✎").formatted(Formatting.GREEN, Formatting.BOLD), "presets", Tooltip.of(
                     TextHelper.concat(
@@ -236,7 +237,7 @@ public class InventoryScreenHandler {
                             Text.literal("Presets stores your armor and rod parts.").formatted(Formatting.GRAY, Formatting.ITALIC)
                     )), minecraftClient));
 
-            if(BossBarHandler.instance().currentLocation == Constant.CREW_ISLAND) {
+            if(BossBarHandler.instance().currentLocation == Location.CREW_ISLAND) {
                 clickableWidgets.add(assembleButton( -buttonSize * 3, buttonSize, Text.literal("\uF016"), "spawn", Tooltip.of(
                         TextHelper.concat(
                                 Text.literal("Spawn\n").formatted(Formatting.BOLD, Formatting.WHITE),

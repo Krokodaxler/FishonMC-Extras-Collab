@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.*;
 import io.github.markassk.fishonmcextras.FOMC.Types.Fish;
 import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
@@ -16,7 +16,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -53,12 +52,12 @@ public class ProfileDataHandler {
             profileData.lightningBottleDryStreak = profileData.allFishCaughtCount;
         }
 
-        if(!profileData.variantCounts.containsKey(Constant.ALTERNATE)) {
-            profileData.variantCounts.put(Constant.ALTERNATE, 0);
+        if(!profileData.variantCounts.containsKey(FishVariant.ALTERNATE)) {
+            profileData.variantCounts.put(FishVariant.ALTERNATE, 0);
         }
 
-        if(!profileData.variantDryStreak.containsKey(Constant.ALTERNATE) || (profileData.variantDryStreak.containsKey(Constant.ALTERNATE) && profileData.variantDryStreak.get(Constant.ALTERNATE) == 0) ) {
-            profileData.variantDryStreak.put(Constant.ALTERNATE, profileData.allFishCaughtCount);
+        if(!profileData.variantDryStreak.containsKey(FishVariant.ALTERNATE) || (profileData.variantDryStreak.containsKey(FishVariant.ALTERNATE) && profileData.variantDryStreak.get(FishVariant.ALTERNATE) == 0) ) {
+            profileData.variantDryStreak.put(FishVariant.ALTERNATE, profileData.allFishCaughtCount);
         }
     }
 
@@ -78,8 +77,8 @@ public class ProfileDataHandler {
         this.profileData.allTotalValue += fish.value;
         this.profileData.allFishSizeCounts.put(fish.size, this.profileData.allFishSizeCounts.getOrDefault(fish.size, 0) + 1);
         this.profileData.allVariantCounts.put(fish.variant, this.profileData.allVariantCounts.getOrDefault(fish.variant, 0) + 1);
-        if (fish.variant == Constant.SPOOKY) {
-            FishOnMCExtras.LOGGER.info("[FoE] Tracking SPOOKY variant fish: {} (count: {})", fish.fishId, this.profileData.allVariantCounts.get(Constant.SPOOKY));
+        if (fish.variant == FishVariant.SPOOKY) {
+            FishOnMCExtras.LOGGER.info("[FoE] Tracking SPOOKY variant fish: {} (count: {})", fish.fishId, this.profileData.allVariantCounts.get(FishVariant.SPOOKY));
         }
         this.profileData.allRarityCounts.put(fish.rarity, this.profileData.allRarityCounts.getOrDefault(fish.rarity, 0) + 1);
 
@@ -104,7 +103,7 @@ public class ProfileDataHandler {
     }
 
     public void updateStatsOnCatch() {
-        if (!Objects.equals(BossBarHandler.instance().weather, Constant.THUNDERSTORM.ID)) {
+        if (!Objects.equals(BossBarHandler.instance().weather, WeatherType.THUNDERSTORM.ID)) {
             this.profileData.lightningBottleDryStreak++;
         }
         // Only increment infusion capsule dry streak if it's not currently a Blood Moon (incrementing this var avoids it being counted in stats counterintuitively)
@@ -113,9 +112,9 @@ public class ProfileDataHandler {
             this.profileData.infusionCapsuleDryStreak++;
         }
 
-        if (!Objects.equals(BossBarHandler.instance().weather, Constant.FABLEDWEATHER.ID)) {
-            this.profileData.variantDryStreak.put(Constant.FABLED,
-                    this.profileData.variantDryStreak.getOrDefault(Constant.FABLED, 0) + 1);
+        if (!Objects.equals(BossBarHandler.instance().weather, WeatherType.FABLEDWEATHER.ID)) {
+            this.profileData.variantDryStreak.put(FishVariant.FABLED,
+                    this.profileData.variantDryStreak.getOrDefault(FishVariant.FABLED, 0) + 1);
         }
     }
 
@@ -297,22 +296,22 @@ public class ProfileDataHandler {
         profileData.shardDryStreak = profileData.allFishCaughtCount;
         profileData.lightningBottleDryStreak = profileData.allFishCaughtCount;
         profileData.infusionCapsuleDryStreak = profileData.allFishCaughtCount;
-        profileData.rarityDryStreak.put(Constant.COMMON, profileData.allFishCaughtCount);
-        profileData.rarityDryStreak.put(Constant.RARE, profileData.allFishCaughtCount);
-        profileData.rarityDryStreak.put(Constant.EPIC, profileData.allFishCaughtCount);
-        profileData.rarityDryStreak.put(Constant.LEGENDARY, profileData.allFishCaughtCount);
-        profileData.rarityDryStreak.put(Constant.MYTHICAL, profileData.allFishCaughtCount);
-        profileData.rarityDryStreak.put(Constant.SPECIAL, profileData.allFishCaughtCount);
-        profileData.fishSizeDryStreak.put(Constant.BABY, profileData.allFishCaughtCount);
-        profileData.fishSizeDryStreak.put(Constant.JUVENILE, profileData.allFishCaughtCount);
-        profileData.fishSizeDryStreak.put(Constant.ADULT, profileData.allFishCaughtCount);
-        profileData.fishSizeDryStreak.put(Constant.LARGE, profileData.allFishCaughtCount);
-        profileData.fishSizeDryStreak.put(Constant.GIGANTIC, profileData.allFishCaughtCount);
-        profileData.variantDryStreak.put(Constant.ALBINO, profileData.allFishCaughtCount);
-        profileData.variantDryStreak.put(Constant.MELANISTIC, profileData.allFishCaughtCount);
-        profileData.variantDryStreak.put(Constant.TROPHY, profileData.allFishCaughtCount);
-        profileData.variantDryStreak.put(Constant.FABLED, profileData.allFishCaughtCount);
-        profileData.variantDryStreak.put(Constant.ALTERNATE, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.COMMON, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.RARE, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.EPIC, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.LEGENDARY, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.MYTHICAL, profileData.allFishCaughtCount);
+        profileData.rarityDryStreak.put(Rarity.SPECIAL, profileData.allFishCaughtCount);
+        profileData.fishSizeDryStreak.put(FishSize.BABY, profileData.allFishCaughtCount);
+        profileData.fishSizeDryStreak.put(FishSize.JUVENILE, profileData.allFishCaughtCount);
+        profileData.fishSizeDryStreak.put(FishSize.ADULT, profileData.allFishCaughtCount);
+        profileData.fishSizeDryStreak.put(FishSize.LARGE, profileData.allFishCaughtCount);
+        profileData.fishSizeDryStreak.put(FishSize.GIGANTIC, profileData.allFishCaughtCount);
+        profileData.variantDryStreak.put(FishVariant.ALBINO, profileData.allFishCaughtCount);
+        profileData.variantDryStreak.put(FishVariant.MELANISTIC, profileData.allFishCaughtCount);
+        profileData.variantDryStreak.put(FishVariant.TROPHY, profileData.allFishCaughtCount);
+        profileData.variantDryStreak.put(FishVariant.FABLED, profileData.allFishCaughtCount);
+        profileData.variantDryStreak.put(FishVariant.ALTERNATE, profileData.allFishCaughtCount);
     }
 
     public static class ProfileData {
@@ -320,9 +319,9 @@ public class ProfileDataHandler {
         public int fishCaughtCount = 0;
         public float totalXP = 0.0f;
         public float totalValue = 0.0f;
-        public Map<Constant, Integer> variantCounts = new HashMap<>();
-        public Map<Constant, Integer> rarityCounts = new HashMap<>();
-        public Map<Constant, Integer> fishSizeCounts = new HashMap<>();
+        public Map<FishVariant, Integer> variantCounts = new HashMap<>();
+        public Map<Rarity, Integer> rarityCounts = new HashMap<>();
+        public Map<FishSize, Integer> fishSizeCounts = new HashMap<>();
         public int petCaughtCount = 0;
         public int shardCaughtCount = 0;
         public int lightningBottleCount = 0;
@@ -337,9 +336,9 @@ public class ProfileDataHandler {
         public int allFishCaughtCount = 0;
         public float allTotalXP = 0.0f;
         public float allTotalValue = 0.0f;
-        public Map<Constant, Integer> allRarityCounts = new HashMap<>();
-        public Map<Constant, Integer> allVariantCounts = new HashMap<>();
-        public Map<Constant, Integer> allFishSizeCounts = new HashMap<>();
+        public Map<Rarity, Integer> allRarityCounts = new HashMap<>();
+        public Map<FishVariant, Integer> allVariantCounts = new HashMap<>();
+        public Map<FishSize, Integer> allFishSizeCounts = new HashMap<>();
         public int allPetCaughtCount = 0;
         public int allShardCaughtCount = 0;
         public int allLightningBottleCount = 0;
@@ -356,9 +355,9 @@ public class ProfileDataHandler {
         public int shardDryStreak;
         public int lightningBottleDryStreak;
         public int infusionCapsuleDryStreak;
-        public Map<Constant, Integer> rarityDryStreak = new HashMap<>();
-        public Map<Constant, Integer> variantDryStreak = new HashMap<>();
-        public Map<Constant, Integer> fishSizeDryStreak = new HashMap<>();
+        public Map<Rarity, Integer> rarityDryStreak = new HashMap<>();
+        public Map<FishVariant, Integer> variantDryStreak = new HashMap<>();
+        public Map<FishSize, Integer> fishSizeDryStreak = new HashMap<>();
 
         // Crew Data
         public List<UUID> crewMembers = new ArrayList<>();
@@ -368,7 +367,7 @@ public class ProfileDataHandler {
         public List<UUID> friends = new ArrayList<>();
 
         // Quest Data
-        public Map<Constant, List<QuestHandler.Quest>> activeQuests = new HashMap<>();
+        public Map<Location, List<QuestHandler.Quest>> activeQuests = new EnumMap<>(Location.class);
 
         // Locked Rolls Data
         public Map<Integer, List<String>> lockedArmorRolls = new HashMap<>();

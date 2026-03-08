@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 
 import java.util.Map;
 
@@ -26,8 +26,8 @@ public class Defaults {
     }
 
     public static final Map<String, FoEDevType> foeDevs = Map.of(
-            "b5a9bbb7-42b4-4a6a-9ebe-bdf6697c8ee0",  new FoEDevType(Constant.ADMIRAL.TAG.getString() + " DannyPX", "DannyPX"),
-            "4c42b880-84df-4b0b-abd6-817997c16732",  new FoEDevType(Constant.CAPTAIN.TAG.getString() + " Krokodaxl", "Krokodaxl")
+            "b5a9bbb7-42b4-4a6a-9ebe-bdf6697c8ee0",  new FoEDevType(PlayerRank.ADMIRAL.TAG.getString() + " DannyPX", "DannyPX"),
+            "4c42b880-84df-4b0b-abd6-817997c16732",  new FoEDevType(PlayerRank.CAPTAIN.TAG.getString() + " Krokodaxl", "Krokodaxl")
     );
 
     public static class FoEDevType {

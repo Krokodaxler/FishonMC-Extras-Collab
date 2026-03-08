@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import io.github.markassk.fishonmcextras.util.UUIDHelper;
 import net.minecraft.component.DataComponentTypes;
@@ -13,14 +14,14 @@ import java.util.UUID;
 
 public class BaitPackage extends FOMCItem{
     public final CustomModelDataComponent customModelData;
-    public final Constant location;
+    public final Location location;
     public final UUID id;
     public final String intricacy;
 
     public BaitPackage(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.customModelData = customModelData;
-        this.location = Constant.valueOfId(nbtCompound.getString("location"));
+        this.location = Location.LOOKUP.valueOfId(nbtCompound.getString("location"));
         this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id"));
         this.intricacy = nbtCompound.getString("intricacy");
     }

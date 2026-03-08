@@ -1,6 +1,8 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishSize;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishVariant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.common.Theming;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.ProfileDataHandler;
@@ -53,59 +55,59 @@ public class FishTrackerHudHandler {
         int displayInfusionCapsuleCaughtCount = config.fishTracker.isFishTrackerOnTimer
                 ? profileData.infusionCapsuleCount
                 : profileData.allInfusionCapsuleCount;
-        Map<Constant, Integer> displayRarityCounts = config.fishTracker.isFishTrackerOnTimer
+        Map<Rarity, Integer> displayRarityCounts = config.fishTracker.isFishTrackerOnTimer
                 ? profileData.rarityCounts
                 : profileData.allRarityCounts;
-        Map<Constant, Integer> displayFishSizeCounts = config.fishTracker.isFishTrackerOnTimer
+        Map<FishSize, Integer> displayFishSizeCounts = config.fishTracker.isFishTrackerOnTimer
                 ? profileData.fishSizeCounts
                 : profileData.allFishSizeCounts;
-        Map<Constant, Integer> displayVariantCounts = config.fishTracker.isFishTrackerOnTimer
+        Map<FishVariant, Integer> displayVariantCounts = config.fishTracker.isFishTrackerOnTimer
                 ? profileData.variantCounts
                 : profileData.allVariantCounts;
-        int displayCommonCount = displayRarityCounts.getOrDefault(Constant.COMMON, 0);
-        int displayRareCount = displayRarityCounts.getOrDefault(Constant.RARE, 0);
-        int displayEpicCount = displayRarityCounts.getOrDefault(Constant.EPIC, 0);
-        int displayLegendaryCount = displayRarityCounts.getOrDefault(Constant.LEGENDARY, 0);
-        int displayMythicalCount = displayRarityCounts.getOrDefault(Constant.MYTHICAL, 0);
-        int displayBabyCount = displayFishSizeCounts.getOrDefault(Constant.BABY, 0);
-        int displayJuvenileCount = displayFishSizeCounts.getOrDefault(Constant.JUVENILE, 0);
-        int displayAdultCount = displayFishSizeCounts.getOrDefault(Constant.ADULT, 0);
-        int displayLargeCount = displayFishSizeCounts.getOrDefault(Constant.LARGE, 0);
-        int displayGiganticCount = displayFishSizeCounts.getOrDefault(Constant.GIGANTIC, 0);
-        int displayAlbinoCount = displayVariantCounts.getOrDefault(Constant.ALBINO, 0);
-        int displayMelanisticCount = displayVariantCounts.getOrDefault(Constant.MELANISTIC, 0);
-        int displayTrophyCount = displayVariantCounts.getOrDefault(Constant.TROPHY, 0);
-        int displayFabledCount = displayVariantCounts.getOrDefault(Constant.FABLED, 0);
-        int displaySpookyCount = displayVariantCounts.getOrDefault(Constant.SPOOKY, 0);
+        int displayCommonCount = displayRarityCounts.getOrDefault(Rarity.COMMON, 0);
+        int displayRareCount = displayRarityCounts.getOrDefault(Rarity.RARE, 0);
+        int displayEpicCount = displayRarityCounts.getOrDefault(Rarity.EPIC, 0);
+        int displayLegendaryCount = displayRarityCounts.getOrDefault(Rarity.LEGENDARY, 0);
+        int displayMythicalCount = displayRarityCounts.getOrDefault(Rarity.MYTHICAL, 0);
+        int displayBabyCount = displayFishSizeCounts.getOrDefault(FishSize.BABY, 0);
+        int displayJuvenileCount = displayFishSizeCounts.getOrDefault(FishSize.JUVENILE, 0);
+        int displayAdultCount = displayFishSizeCounts.getOrDefault(FishSize.ADULT, 0);
+        int displayLargeCount = displayFishSizeCounts.getOrDefault(FishSize.LARGE, 0);
+        int displayGiganticCount = displayFishSizeCounts.getOrDefault(FishSize.GIGANTIC, 0);
+        int displayAlbinoCount = displayVariantCounts.getOrDefault(FishVariant.ALBINO, 0);
+        int displayMelanisticCount = displayVariantCounts.getOrDefault(FishVariant.MELANISTIC, 0);
+        int displayTrophyCount = displayVariantCounts.getOrDefault(FishVariant.TROPHY, 0);
+        int displayFabledCount = displayVariantCounts.getOrDefault(FishVariant.FABLED, 0);
+        int displaySpookyCount = displayVariantCounts.getOrDefault(FishVariant.SPOOKY, 0);
 
-        Map<Constant, Integer> displayRarityDryStreak = profileData.rarityDryStreak;
-        Map<Constant, Integer> displayFishSizeDryStreak = profileData.fishSizeDryStreak;
-        Map<Constant, Integer> displayVariantDryStreak = profileData.variantDryStreak;
+        Map<Rarity, Integer> displayRarityDryStreak = profileData.rarityDryStreak;
+        Map<FishSize, Integer> displayFishSizeDryStreak = profileData.fishSizeDryStreak;
+        Map<FishVariant, Integer> displayVariantDryStreak = profileData.variantDryStreak;
 
-        int displayDryStreakCommonCount = displayRarityDryStreak.getOrDefault(Constant.COMMON, 0);
-        int displayDryStreakRareCount = displayRarityDryStreak.getOrDefault(Constant.RARE, 0);
-        int displayDryStreakEpicCount = displayRarityDryStreak.getOrDefault(Constant.EPIC, 0);
-        int displayDryStreakLegendaryCount = displayRarityDryStreak.getOrDefault(Constant.LEGENDARY, 0);
-        int displayDryStreakMythicalCount = displayRarityDryStreak.getOrDefault(Constant.MYTHICAL, 0);
-        int displayDryStreakBabyCount = displayFishSizeDryStreak.getOrDefault(Constant.BABY, 0);
-        int displayDryStreakJuvenileCount = displayFishSizeDryStreak.getOrDefault(Constant.JUVENILE, 0);
-        int displayDryStreakAdultCount = displayFishSizeDryStreak.getOrDefault(Constant.ADULT, 0);
-        int displayDryStreakLargeCount = displayFishSizeDryStreak.getOrDefault(Constant.LARGE, 0);
-        int displayDryStreakGiganticCount = displayFishSizeDryStreak.getOrDefault(Constant.GIGANTIC, 0);
-        int displayDryStreakAlbinoCount = displayVariantDryStreak.getOrDefault(Constant.ALBINO, 0);
-        int displayDryStreakMelanisticCount = displayVariantDryStreak.getOrDefault(Constant.MELANISTIC, 0);
-        int displayDryStreakTrophyCount = displayVariantDryStreak.getOrDefault(Constant.TROPHY, 0);
-        int displayDryStreakFabledCount = displayVariantDryStreak.getOrDefault(Constant.FABLED, 0);
-        int displayDryStreakSpookyCount = displayVariantDryStreak.getOrDefault(Constant.SPOOKY, 0);
+        int displayDryStreakCommonCount = displayRarityDryStreak.getOrDefault(Rarity.COMMON, 0);
+        int displayDryStreakRareCount = displayRarityDryStreak.getOrDefault(Rarity.RARE, 0);
+        int displayDryStreakEpicCount = displayRarityDryStreak.getOrDefault(Rarity.EPIC, 0);
+        int displayDryStreakLegendaryCount = displayRarityDryStreak.getOrDefault(Rarity.LEGENDARY, 0);
+        int displayDryStreakMythicalCount = displayRarityDryStreak.getOrDefault(Rarity.MYTHICAL, 0);
+        int displayDryStreakBabyCount = displayFishSizeDryStreak.getOrDefault(FishSize.BABY, 0);
+        int displayDryStreakJuvenileCount = displayFishSizeDryStreak.getOrDefault(FishSize.JUVENILE, 0);
+        int displayDryStreakAdultCount = displayFishSizeDryStreak.getOrDefault(FishSize.ADULT, 0);
+        int displayDryStreakLargeCount = displayFishSizeDryStreak.getOrDefault(FishSize.LARGE, 0);
+        int displayDryStreakGiganticCount = displayFishSizeDryStreak.getOrDefault(FishSize.GIGANTIC, 0);
+        int displayDryStreakAlbinoCount = displayVariantDryStreak.getOrDefault(FishVariant.ALBINO, 0);
+        int displayDryStreakMelanisticCount = displayVariantDryStreak.getOrDefault(FishVariant.MELANISTIC, 0);
+        int displayDryStreakTrophyCount = displayVariantDryStreak.getOrDefault(FishVariant.TROPHY, 0);
+        int displayDryStreakFabledCount = displayVariantDryStreak.getOrDefault(FishVariant.FABLED, 0);
+        int displayDryStreakSpookyCount = displayVariantDryStreak.getOrDefault(FishVariant.SPOOKY, 0);
 
-        int displaySpecialCount = displayRarityCounts.getOrDefault(Constant.SPECIAL, 0);
-        int displayDryStreakSpecialCount = displayRarityDryStreak.getOrDefault(Constant.SPECIAL, 0);
+        int displaySpecialCount = displayRarityCounts.getOrDefault(Rarity.SPECIAL, 0);
+        int displayDryStreakSpecialCount = displayRarityDryStreak.getOrDefault(Rarity.SPECIAL, 0);
 
-        int displayAlternateCount = displayVariantCounts.getOrDefault(Constant.ALTERNATE, 0);
-        int displayDryStreakAlternateCount = displayVariantDryStreak.getOrDefault(Constant.ALTERNATE, 0);
+        int displayAlternateCount = displayVariantCounts.getOrDefault(FishVariant.ALTERNATE, 0);
+        int displayDryStreakAlternateCount = displayVariantDryStreak.getOrDefault(FishVariant.ALTERNATE, 0);
 
-        int displayFrozenCount = displayVariantCounts.getOrDefault(Constant.FROZEN, 0);
-        int displayDryStreakFrozenCount = displayVariantDryStreak.getOrDefault(Constant.FROZEN, 0);
+        int displayFrozenCount = displayVariantCounts.getOrDefault(FishVariant.FROZEN, 0);
+        int displayDryStreakFrozenCount = displayVariantDryStreak.getOrDefault(FishVariant.FROZEN, 0);
 
         int displayTimerFishCaughtCount = profileData.timerFishCaughtCount;
 
@@ -233,7 +235,7 @@ public class FishTrackerHudHandler {
 
             if (config.fishTracker.fishTrackerToggles.rarityToggles.showCommon) {
                 textList.add(TextHelper.concat(
-                        Constant.COMMON.TAG,
+                        Rarity.COMMON.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayCommonCount)),
                         getPercentage(displayCommonCount, displayFishCaughtCount)
@@ -244,7 +246,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.rarityToggles.showRare) {
                 textList.add(TextHelper.concat(
-                        Constant.RARE.TAG,
+                        Rarity.RARE.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayRareCount)),
                         getPercentage(displayRareCount, displayFishCaughtCount)
@@ -255,7 +257,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.rarityToggles.showEpic) {
                 textList.add(TextHelper.concat(
-                        Constant.EPIC.TAG,
+                        Rarity.EPIC.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayEpicCount)),
                         getPercentage(displayEpicCount, displayFishCaughtCount)
@@ -266,7 +268,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.rarityToggles.showLegendary) {
                 textList.add(TextHelper.concat(
-                        Constant.LEGENDARY.TAG,
+                        Rarity.LEGENDARY.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayLegendaryCount)),
                         getPercentage(displayLegendaryCount, displayFishCaughtCount)
@@ -277,7 +279,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.rarityToggles.showMythical) {
                 textList.add(TextHelper.concat(
-                        Constant.MYTHICAL.TAG,
+                        Rarity.MYTHICAL.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayMythicalCount)),
                         getPercentage(displayMythicalCount, displayFishCaughtCount)
@@ -290,7 +292,7 @@ public class FishTrackerHudHandler {
             //EVENT FISHES
             if(config.fishTracker.fishTrackerToggles.fishEventToggles.rarityToggles.showSpecial) {
                 textList.add(TextHelper.concat(
-                        Constant.SPECIAL.TAG,
+                        Rarity.SPECIAL.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displaySpecialCount)),
                         getPercentage(displaySpecialCount, displayFishCaughtCount)
@@ -306,7 +308,7 @@ public class FishTrackerHudHandler {
 
             if (config.fishTracker.fishTrackerToggles.fishSizeToggles.showBaby) {
                 textList.add(TextHelper.concat(
-                        Constant.BABY.TAG,
+                        FishSize.BABY.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayBabyCount)),
                         getPercentage(displayBabyCount, displayFishCaughtCount)
@@ -317,7 +319,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.fishSizeToggles.showJuvenile) {
                 textList.add(TextHelper.concat(
-                        Constant.JUVENILE.TAG,
+                        FishSize.JUVENILE.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayJuvenileCount)),
                         getPercentage(displayJuvenileCount, displayFishCaughtCount)
@@ -328,7 +330,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.fishSizeToggles.showAdult) {
                 textList.add(TextHelper.concat(
-                        Constant.ADULT.TAG,
+                        FishSize.ADULT.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayAdultCount)),
                         getPercentage(displayAdultCount, displayFishCaughtCount)
@@ -339,7 +341,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.fishSizeToggles.showLarge) {
                 textList.add(TextHelper.concat(
-                        Constant.LARGE.TAG,
+                        FishSize.LARGE.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayLargeCount)),
                         getPercentage(displayLargeCount, displayFishCaughtCount)
@@ -350,7 +352,7 @@ public class FishTrackerHudHandler {
             }
             if (config.fishTracker.fishTrackerToggles.fishSizeToggles.showGigantic) {
                 textList.add(TextHelper.concat(
-                        Constant.GIGANTIC.TAG,
+                        FishSize.GIGANTIC.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayGiganticCount)),
                         getPercentage(displayGiganticCount, displayFishCaughtCount)
@@ -366,7 +368,7 @@ public class FishTrackerHudHandler {
 
             if(config.fishTracker.fishTrackerToggles.variantToggles.showAlbino) {
                 textList.add(TextHelper.concat(
-                        Constant.ALBINO.TAG,
+                        FishVariant.ALBINO.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayAlbinoCount)),
                         getPercentage(displayAlbinoCount, displayFishCaughtCount)
@@ -377,7 +379,7 @@ public class FishTrackerHudHandler {
             }
             if(config.fishTracker.fishTrackerToggles.variantToggles.showMelanistic) {
                 textList.add(TextHelper.concat(
-                        Constant.MELANISTIC.TAG,
+                        FishVariant.MELANISTIC.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayMelanisticCount)),
                         getPercentage(displayMelanisticCount, displayFishCaughtCount)
@@ -388,7 +390,7 @@ public class FishTrackerHudHandler {
             }
             if(config.fishTracker.fishTrackerToggles.variantToggles.showTrophy) {
                 textList.add(TextHelper.concat(
-                        Constant.TROPHY.TAG,
+                        FishVariant.TROPHY.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayTrophyCount)),
                         getPercentage(displayTrophyCount, displayFishCaughtCount)
@@ -399,7 +401,7 @@ public class FishTrackerHudHandler {
             }
             if(config.fishTracker.fishTrackerToggles.variantToggles.showFabled) {
                 textList.add(TextHelper.concat(
-                        Constant.FABLED.TAG,
+                        FishVariant.FABLED.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayFabledCount)),
                         getPercentage(displayFabledCount, displayFishCaughtCount)
@@ -412,7 +414,7 @@ public class FishTrackerHudHandler {
             //EVENT FISHES
             if(config.fishTracker.fishTrackerToggles.fishEventToggles.variantToggles.showAlternate) {
                 textList.add(TextHelper.concat(
-                        Constant.ALTERNATE.TAG,
+                        FishVariant.ALTERNATE.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayAlternateCount)),
                         getPercentage(displayAlternateCount, displayFishCaughtCount)
@@ -423,7 +425,7 @@ public class FishTrackerHudHandler {
             }
             if(config.fishTracker.fishTrackerToggles.fishEventToggles.variantToggles.showSpooky) {
                 textList.add(TextHelper.concat(
-                        Constant.SPOOKY.TAG,
+                        FishVariant.SPOOKY.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displaySpookyCount)),
                         getPercentage(displaySpookyCount, displayFishCaughtCount)
@@ -434,7 +436,7 @@ public class FishTrackerHudHandler {
             }
             if(config.fishTracker.fishTrackerToggles.fishEventToggles.variantToggles.showFrozen) {
                 textList.add(TextHelper.concat(
-                        Constant.FROZEN.TAG,
+                        FishVariant.FROZEN.TAG,
                         Text.literal(" "),
                         Text.literal(getNumber(displayFrozenCount)),
                         getPercentage(displayFrozenCount, displayFishCaughtCount)

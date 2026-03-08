@@ -1,7 +1,7 @@
 package io.github.markassk.fishonmcextras.handler;
 
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.config.TrackerEventConfig;
 import io.github.markassk.fishonmcextras.util.TextHelper;
@@ -64,7 +64,7 @@ public class EventHandler {
                 TrackerEventConfig.EventTracker.OtherEventOptions.WitchingHourOptions witchingHourOptions = config.eventTracker.otherEventOptions.witchingHourOptions;
 
                 String location = BossBarHandler.instance().currentLocation.ID;
-                boolean isAtCypressLake = location.equals(Constant.CYPRESS_LAKE.ID);
+                boolean isAtCypressLake = location.equals(Location.CYPRESS_LAKE.ID);
                 boolean requireCypressLake = !witchingHourOptions.showOutsideCypressLake;
                 int offsetHours = witchingHourOptions.alertOffsetHours;
 
@@ -102,7 +102,7 @@ public class EventHandler {
                                                                 .withColor(0x990000),
                                                 Text.literal("\n").formatted(Formatting.WHITE),
                                                 Text.literal("in ").formatted(Formatting.GRAY),
-                                                Constant.CYPRESS_LAKE.TAG.copy(),
+                                                Location.CYPRESS_LAKE.TAG.copy(),
                                                 Text.literal("\n").formatted(Formatting.WHITE),
                                                 Text.literal("1 in 300 chance for bigfoot to steal your fish (and leave a gift)")
                                                                 .formatted(Formatting.GRAY));

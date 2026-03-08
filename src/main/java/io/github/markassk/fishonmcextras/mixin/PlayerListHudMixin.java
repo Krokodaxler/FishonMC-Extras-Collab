@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.mixin;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 import io.github.markassk.fishonmcextras.FOMC.Types.Defaults;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.LoadingHandler;
@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import java.util.Objects;
-import java.util.UUID;
-
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
     @Unique
@@ -29,9 +26,9 @@ public class PlayerListHudMixin {
 
         if(LoadingHandler.instance().isOnServer && Defaults.foeDevs.containsKey(entry.getProfile().getId().toString())) {
             if(config.fun.isFoeTagPrefix) {
-                text = Constant.FOE.TAG.copy().append(Text.literal(" ")).append(Text.literal(entry.getProfile().getName()).withColor(0x00AF0E));
+                text = PlayerRank.FOE.TAG.copy().append(Text.literal(" ")).append(Text.literal(entry.getProfile().getName()).withColor(0x00AF0E));
             } else {
-                text = text.append(Text.literal(" ").append(Constant.FOE.TAG));
+                text = text.append(Text.literal(" ").append(PlayerRank.FOE.TAG));
             }
         }
 

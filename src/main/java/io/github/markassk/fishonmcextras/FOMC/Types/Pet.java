@@ -1,7 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.ClimateConstant;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.*;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import io.github.markassk.fishonmcextras.util.UUIDHelper;
 import net.minecraft.component.DataComponentTypes;
@@ -9,19 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Pet extends FOMCItem {
+
     public final UUID id;
-    public final Constant pet;
-    public final ClimateConstant climate;
-    public final Constant location;
+    public final PetType pet;
+    public final Climate climate;
+    public final Location location;
 
     public final int lvl;
 
@@ -41,16 +38,16 @@ public class Pet extends FOMCItem {
     public final String petItem;
 
     private Pet(NbtCompound nbtCompound, String type) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id"));
-        this.pet = Constant.valueOfId(nbtCompound.getString("pet"));
-        this.climate = ClimateConstant.valueOfId(nbtCompound.getString("climate"));
-        this.location = Constant.valueOfId(nbtCompound.getString("location"));
+        this.pet = PetType.LOOKUP.valueOfId(nbtCompound.getString("pet"));
+        this.climate = Climate.LOOKUP.valueOfId(nbtCompound.getString("climate"));
+        this.location = Location.LOOKUP.valueOfId(nbtCompound.getString("location"));
         this.lvl = nbtCompound.getInt("level");
         this.currentXp = nbtCompound.getFloat("xp_cur");
         this.neededXp = nbtCompound.getFloat("xp_need");
-        this.climateStat = new Stat(nbtCompound, Constant.CLIMATE_BASE);
-        this.locationStat = new Stat(nbtCompound, Constant.LOCATION_BASE);
+        this.climateStat = new Stat(nbtCompound, StatType.CLIMATE);
+        this.locationStat = new Stat(nbtCompound, StatType.LOCATION);
         this.percentPetRating = getPercentPetRating(this.climateStat.percentLuck, this.climateStat.percentScale,
                 this.locationStat.percentLuck, this.locationStat.percentScale);
         this.discovererName = nbtCompound.getString("username");
@@ -62,8 +59,8 @@ public class Pet extends FOMCItem {
     }
 
     public Pet(
-            Constant pet,
-            Constant rarity,
+            PetType pet,
+            Rarity rarity,
             float cMaxLuck,
             float cMaxScale,
             float cPercentLuck,
@@ -75,19 +72,19 @@ public class Pet extends FOMCItem {
         super("pet", rarity);
         this.id = UUID.randomUUID();
         this.pet = pet;
-        this.climate = ClimateConstant.DEFAULT;
-        this.location = Constant.DEFAULT;
+        this.climate = Climate.UNKNOWN;
+        this.location = Location.UNKNOWN;
         this.lvl = 100;
         this.currentXp = 0;
         this.neededXp = 0;
         this.climateStat = new Stat(
-                Constant.CLIMATE_BASE.ID,
+                "",
                 cMaxLuck,
                 cMaxScale,
                 cPercentLuck,
                 cPercentScale);
         this.locationStat = new Stat(
-                Constant.LOCATION_BASE.ID,
+                "",
                 lMaxLuck,
                 lMaxScale,
                 lPercentLuck,
@@ -102,6 +99,10 @@ public class Pet extends FOMCItem {
 
     }
 
+    public enum StatType {
+        LOCATION, CLIMATE
+    }
+
     public static class Stat {
         public final String id;
         public final float currentLuck;
@@ -111,9 +112,9 @@ public class Pet extends FOMCItem {
         public final float percentLuck;
         public final float percentScale;
 
-        private Stat(NbtCompound nbtCompound, Constant base) {
+        private Stat(NbtCompound nbtCompound, StatType base) {
             switch (base) {
-                case Constant.CLIMATE_BASE -> {
+                case StatType.CLIMATE -> {
                     this.id = nbtCompound.getString("climate");
                     this.currentLuck = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(0)
                             .getInt("cur");
@@ -128,7 +129,7 @@ public class Pet extends FOMCItem {
                     this.percentScale = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(1)
                             .getFloat("percent_max");
                 }
-                case Constant.LOCATION_BASE -> {
+                case StatType.LOCATION -> {
                     this.id = nbtCompound.getString("location");
                     this.currentLuck = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(0)
                             .getInt("cur");
@@ -174,53 +175,6 @@ public class Pet extends FOMCItem {
     private static float getPercentPetRating(float climateLuck, float climateScale, float locationLuck,
             float locationScale) {
         return (climateLuck + climateScale + locationLuck + locationScale) / 4;
-    }
-
-    public static Constant getConstantFromPercent(float value) {
-        BigDecimal percent = new BigDecimal(Float.toString(value))
-                .multiply(BigDecimal.valueOf(100));
-
-        if (percent.compareTo(BigDecimal.valueOf(20)) <= 0)
-            return Constant.SICKLY;
-        else if (percent.compareTo(BigDecimal.valueOf(30)) < 0)
-            return Constant.BAD;
-        else if (percent.compareTo(BigDecimal.valueOf(40)) < 0)
-            return Constant.BELOW_AVERAGE;
-        else if (percent.compareTo(BigDecimal.valueOf(50)) < 0)
-            return Constant.AVERAGE;
-        else if (percent.compareTo(BigDecimal.valueOf(60)) < 0)
-            return Constant.GOOD;
-        else if (percent.compareTo(BigDecimal.valueOf(80)) < 0)
-            return Constant.GREAT;
-        else if (percent.compareTo(BigDecimal.valueOf(90)) < 0)
-            return Constant.EXCELLENT;
-        else if (percent.compareTo(BigDecimal.valueOf(100)) < 0)
-            return Constant.AMAZING;
-        else if (percent.compareTo(BigDecimal.valueOf(101)) <= 0)
-            return Constant.PERFECT;
-        return Constant.DEFAULT;
-    }
-
-    public static Constant getConstantFromLine(Text line) {
-        if (line.getString().contains(Constant.SICKLY.TAG.getString()))
-            return Constant.SICKLY;
-        else if (line.getString().contains(Constant.BAD.TAG.getString()))
-            return Constant.BAD;
-        else if (line.getString().contains(Constant.BELOW_AVERAGE.TAG.getString()))
-            return Constant.BELOW_AVERAGE;
-        else if (line.getString().contains(Constant.AVERAGE.TAG.getString()))
-            return Constant.AVERAGE;
-        else if (line.getString().contains(Constant.GOOD.TAG.getString()))
-            return Constant.GOOD;
-        else if (line.getString().contains(Constant.GREAT.TAG.getString()))
-            return Constant.GREAT;
-        else if (line.getString().contains(Constant.EXCELLENT.TAG.getString()))
-            return Constant.EXCELLENT;
-        else if (line.getString().contains(Constant.AMAZING.TAG.getString()))
-            return Constant.AMAZING;
-        else if (line.getString().contains(Constant.PERFECT.TAG.getString()))
-            return Constant.PERFECT;
-        return Constant.DEFAULT;
     }
 
     public static Pet getPet(ItemStack itemStack, String type) {

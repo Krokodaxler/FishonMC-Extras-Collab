@@ -1,7 +1,6 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
-import io.github.markassk.fishonmcextras.FOMC.LocationInfo;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.FOMC.Types.Bait;
 import io.github.markassk.fishonmcextras.FOMC.Types.Lure;
 import io.github.markassk.fishonmcextras.common.Theming;
@@ -42,7 +41,7 @@ public class NotificationHudHandler {
             // Full Inventory Warning
             if(config.fullInventoryTracker.showFullInventoryWarningHUD
                     && FullInventoryHandler.instance().isOverThreshold
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
@@ -55,15 +54,15 @@ public class NotificationHudHandler {
             // Wrong Armor Warning
             if(config.equipmentTracker.showArmorWarningHUD
                     && ArmorHandler.instance().isWrongChestplateClimate
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("You have equipped a ").formatted(Formatting.RED),
                         ArmorHandler.instance().currentChestplateItem.getName(),
                         Text.literal(" in a ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).CLIMATE.TAG,
+                        BossBarHandler.instance().currentLocation.CLIMATE.TAG,
                         Text.literal(" location").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
 
@@ -71,15 +70,15 @@ public class NotificationHudHandler {
             }
             if(config.equipmentTracker.showArmorWarningHUD
                     && ArmorHandler.instance().isWrongLeggingsClimate
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("You have equipped a ").formatted(Formatting.RED),
                         ArmorHandler.instance().currentLeggingsItem.getName(),
                         Text.literal(" in a ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).CLIMATE.TAG,
+                        BossBarHandler.instance().currentLocation.CLIMATE.TAG,
                         Text.literal(" location").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
 
@@ -87,15 +86,15 @@ public class NotificationHudHandler {
             }
             if(config.equipmentTracker.showArmorWarningHUD
                     && ArmorHandler.instance().isWrongBootsClimate
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("You have equipped a ").formatted(Formatting.RED),
                         ArmorHandler.instance().currentBootsItem.getName(),
                         Text.literal(" in a ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).CLIMATE.TAG,
+                        BossBarHandler.instance().currentLocation.CLIMATE.TAG,
                         Text.literal(" location").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
 
@@ -106,8 +105,8 @@ public class NotificationHudHandler {
             if(config.baitTracker.showBaitWarningHUD
                     && FishingRodHandler.instance().isWrongBait
                     && FishingRodHandler.instance().fishingRod != null
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 if(FishingRodHandler.instance().fishingRod.tacklebox.getFirst() instanceof Bait bait) {
                     textList.add(Text.empty());
@@ -115,7 +114,7 @@ public class NotificationHudHandler {
                             Text.literal("Your ").formatted(Formatting.RED),
                             Text.literal(TextHelper.upperCaseAllFirstCharacter(bait.name)).formatted(Formatting.WHITE),
                             Text.literal(" has no use in ").formatted(Formatting.RED),
-                            LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER.TAG,
+                            BossBarHandler.instance().currentLocation.WATER.TAG,
                             Text.literal(" here").formatted(Formatting.RED),
                             Text.literal(".").formatted(Formatting.RED)
                     ));
@@ -125,7 +124,7 @@ public class NotificationHudHandler {
                             Text.literal("Your ").formatted(Formatting.RED),
                             Text.literal(TextHelper.upperCaseAllFirstCharacter(lure.name)).formatted(Formatting.WHITE),
                             Text.literal(" has no use in ").formatted(Formatting.RED),
-                            LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER.TAG,
+                            BossBarHandler.instance().currentLocation.WATER.TAG,
                             Text.literal(" here").formatted(Formatting.RED),
                             Text.literal(".").formatted(Formatting.RED)
                     ));
@@ -136,8 +135,8 @@ public class NotificationHudHandler {
 			if (config.baitTracker.showLowBaitWarningHUD 
 					&& FishingRodHandler.instance().fishingRod != null
 					&& !FishingRodHandler.instance().fishingRod.tacklebox.isEmpty()
-					&& BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-					&& BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+					&& BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+					&& BossBarHandler.instance().currentLocation != Location.SPAWNHUB
 				)
 			{
 				if (FishingRodHandler.instance().fishingRod.tacklebox.getFirst() instanceof Bait bait
@@ -169,45 +168,45 @@ public class NotificationHudHandler {
             // Wrong Rod Parts Warning
             if(config.equipmentTracker.showLineWarningHUD
                     && FishingRodHandler.instance().isWrongLine
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("Your ").formatted(Formatting.RED),
                         Text.literal(FishingRodHandler.instance().fishingRod.line.name).formatted(Formatting.WHITE),
                         Text.literal(" has no use in ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER.TAG,
+                        BossBarHandler.instance().currentLocation.WATER.TAG,
                         Text.literal(" here").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
                 ));
             }
             if(config.equipmentTracker.showPoleWarningHUD
                     && FishingRodHandler.instance().isWrongPole
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("Your ").formatted(Formatting.RED),
                         Text.literal(FishingRodHandler.instance().fishingRod.pole.name).formatted(Formatting.WHITE),
                         Text.literal(" has no use in ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER.TAG,
+                        BossBarHandler.instance().currentLocation.WATER.TAG,
                         Text.literal(" here").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
                 ));
             }
             if(config.equipmentTracker.showReelWarningHUD
                     && FishingRodHandler.instance().isWrongReel
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
                         Text.literal("Your ").formatted(Formatting.RED),
                         Text.literal(FishingRodHandler.instance().fishingRod.reel.name).formatted(Formatting.WHITE),
                         Text.literal(" has no use in ").formatted(Formatting.RED),
-                        LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER.TAG,
+                        BossBarHandler.instance().currentLocation.WATER.TAG,
                         Text.literal(" here").formatted(Formatting.RED),
                         Text.literal(".").formatted(Formatting.RED)
                 ));
@@ -216,8 +215,8 @@ public class NotificationHudHandler {
             if(config.petEquipTracker.warningOptions.showWrongPetWarningHUD
                     && PetEquipHandler.instance().isWrongPet()
                     && PetEquipHandler.instance().petStatus == PetEquipHandler.PetStatus.HAS_PET
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                    && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
             ) {
                 textList.add(Text.empty());
                 textList.add(TextHelper.concat(
@@ -230,7 +229,7 @@ public class NotificationHudHandler {
             }
 
             if(config.eventTracker.weatherEventOptions.showAlertHUD
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
                     && System.currentTimeMillis() - EventHandler.instance().weatherEventAlertTime <= config.eventTracker.weatherEventOptions.alertDismissSeconds * 1000L
             ) {
                 EventHandler.instance().weatherEvents.forEach((weatherEvent, time) -> {
@@ -269,7 +268,7 @@ public class NotificationHudHandler {
             }
 
             if(config.eventTracker.otherEventOptions.fabledOptions.showAlertHUD
-                    && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
+                    && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
                     && System.currentTimeMillis() - EventHandler.instance().fabledEventAlertTime <= config.eventTracker.otherEventOptions.fabledOptions.alertDismissSeconds * 1000L
             ) {
                 int seconds = config.eventTracker.otherEventOptions.fabledOptions.alertDismissSeconds - ((int) (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - EventHandler.instance().fabledEventAlertTime)));
@@ -278,7 +277,7 @@ public class NotificationHudHandler {
                 textList.add(TextHelper.concat(
                         Text.literal("Fabled Fish Event").formatted(Formatting.YELLOW).withColor(0xcc302a),
                         Text.literal(" at ").formatted(Formatting.WHITE),
-                        Constant.valueOfTag(EventHandler.instance().fabledLocation).TAG
+                        Location.LOOKUP.valueOfTag(EventHandler.instance().fabledLocation).TAG
                 ));
                 textList.add(TextHelper.concat(
                         Text.literal("ᴛʜɪѕ ɴᴏᴛɪꜰɪᴄᴀᴛɪᴏɴ ᴡɪʟʟ ʙᴇ ᴅɪѕᴍɪѕѕᴇᴅ ɪɴ ").formatted(Formatting.GRAY),
@@ -341,8 +340,8 @@ public class NotificationHudHandler {
         }
 
         if(!QuestHandler.instance().isQuestInitialized()
-                && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND
-                && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB
+                && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND
+                && BossBarHandler.instance().currentLocation != Location.SPAWNHUB
         ) {
             textList.add(Text.empty());
             textList.add(TextHelper.concat(

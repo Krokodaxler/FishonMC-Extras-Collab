@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
@@ -13,7 +13,7 @@ public class CraftingComponent extends FOMCItem {
     public final CustomModelDataComponent customModelData;
 
     public CraftingComponent(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.customModelData = customModelData;
     }
 

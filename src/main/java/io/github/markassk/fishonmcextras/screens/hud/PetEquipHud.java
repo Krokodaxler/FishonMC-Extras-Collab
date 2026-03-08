@@ -1,7 +1,6 @@
 package io.github.markassk.fishonmcextras.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
-import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetRating;
 import io.github.markassk.fishonmcextras.common.FlairDecor;
 import io.github.markassk.fishonmcextras.common.Theming;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
@@ -70,15 +69,15 @@ public class PetEquipHud {
             heightClampTranslation -= (int) ((padding * 3) * (1 - yPercent));
 
             // Draw Background
-            Constant ratingTag = Constant.DEFAULT;
+            PetRating rating = PetRating.UNKNOWN;
             if (config.petEquipTracker.activePetHUDOptions.colorPetBorderToRating
                     && ProfileDataHandler.instance().profileData != null
                     && ProfileDataHandler.instance().profileData.equippedPet != null) {
-                ratingTag = Pet.getConstantFromPercent(
+                rating = PetRating.LOOKUP.valueOfPercent(
                         ProfileDataHandler.instance().profileData.equippedPet.percentPetRating);
             }
             int borderColor = config.petEquipTracker.activePetHUDOptions.colorPetBorderToRating
-                    ? ratingTag.COLOR
+                    ? rating.COLOR
                     : 0xFFFFFF;
             if (rightAlignment) {
                 drawContext.fill(scaledX, scaledY - heightClampTranslation,

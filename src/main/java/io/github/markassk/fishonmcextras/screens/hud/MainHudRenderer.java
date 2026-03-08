@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.config.ConfigConstants;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.BossBarHandler;
@@ -45,7 +45,7 @@ public class MainHudRenderer implements HudRenderCallback {
                     this.barHud.render(drawContext, MinecraftClient.getInstance());
                 }
 
-                if(BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND) {
+                if(BossBarHandler.instance().currentLocation != Location.CREW_ISLAND) {
 
                     if(config.fishTracker.showFishTrackerHUD) {
                         this.fishTrackerHud.render(drawContext, MinecraftClient.getInstance());

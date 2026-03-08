@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
+import io.github.markassk.fishonmcextras.FOMC.Enums.WaterType;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
@@ -17,16 +18,16 @@ public class Bait extends FOMCItem {
     public final String name;
     public final CustomModelDataComponent customModelData;
     public final int counter;
-    public final Constant water;
+    public final WaterType water;
     public final String intricacy;
     public final List<BaitStats> baitStats;
 
     private Bait(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.name = nbtCompound.getString("name");
         this.customModelData = customModelData;
         this.counter = nbtCompound.getInt("counter");
-        this.water = Constant.valueOfId(nbtCompound.getString("water"));
+        this.water = WaterType.LOOKUP.valueOfId(nbtCompound.getString("water"));
         this.intricacy = nbtCompound.getString("intricacy");
         NbtList nbtList = nbtCompound.getList("base", NbtElement.LIST_TYPE);
         List<NbtCompound> nbtCompoundList = new ArrayList<>();

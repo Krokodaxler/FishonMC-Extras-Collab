@@ -1,6 +1,9 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.EnumConstant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishSize;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishVariant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.screens.widget.IconButtonWidget;
 import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
@@ -64,22 +67,22 @@ public class StatsImportHandler {
 
                 loreLines.forEach(lore -> {
                     String loreLine = lore.getString();
-                    if (loreLine.contains(Constant.COMMON.TAG.getString())) dummyProfileData.allRarityCounts.put(Constant.COMMON, getValue(loreLine, Constant.COMMON));
-                    else if (loreLine.contains(Constant.RARE.TAG.getString())) dummyProfileData.allRarityCounts.put(Constant.RARE, getValue(loreLine, Constant.RARE));
-                    else if (loreLine.contains(Constant.EPIC.TAG.getString())) dummyProfileData.allRarityCounts.put(Constant.EPIC, getValue(loreLine, Constant.EPIC));
-                    else if (loreLine.contains(Constant.LEGENDARY.TAG.getString())) dummyProfileData.allRarityCounts.put(Constant.LEGENDARY, getValue(loreLine, Constant.LEGENDARY));
-                    else if (loreLine.contains(Constant.MYTHICAL.TAG.getString())) dummyProfileData.allRarityCounts.put(Constant.MYTHICAL, getValue(loreLine, Constant.MYTHICAL));
-                    else if (loreLine.contains(Constant.BABY.TAG.getString())) dummyProfileData.allFishSizeCounts.put(Constant.BABY, getValue(loreLine, Constant.BABY));
-                    else if (loreLine.contains(Constant.JUVENILE.TAG.getString())) dummyProfileData.allFishSizeCounts.put(Constant.JUVENILE, getValue(loreLine, Constant.JUVENILE));
-                    else if (loreLine.contains(Constant.ADULT.TAG.getString())) dummyProfileData.allFishSizeCounts.put(Constant.ADULT, getValue(loreLine, Constant.ADULT));
-                    else if (loreLine.contains(Constant.LARGE.TAG.getString())) dummyProfileData.allFishSizeCounts.put(Constant.LARGE, getValue(loreLine, Constant.LARGE));
-                    else if (loreLine.contains(Constant.GIGANTIC.TAG.getString())) dummyProfileData.allFishSizeCounts.put(Constant.GIGANTIC, getValue(loreLine, Constant.GIGANTIC));
-                    else if (loreLine.contains(Constant.ALBINO.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.ALBINO, getValue(loreLine, Constant.ALBINO));
-                    else if (loreLine.contains(Constant.MELANISTIC.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.MELANISTIC, getValue(loreLine, Constant.MELANISTIC));
-                    else if (loreLine.contains(Constant.TROPHY.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.TROPHY, getValue(loreLine, Constant.TROPHY));
-                    else if (loreLine.contains(Constant.FABLED.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.FABLED, getValue(loreLine, Constant.FABLED));
-                    else if (loreLine.contains(Constant.SPOOKY.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.SPOOKY, getValue(loreLine, Constant.SPOOKY));
-                    else if (loreLine.contains(Constant.FROZEN.TAG.getString())) dummyProfileData.allVariantCounts.put(Constant.FROZEN, getValue(loreLine, Constant.FROZEN));
+                    if (loreLine.contains(Rarity.COMMON.TAG.getString())) dummyProfileData.allRarityCounts.put(Rarity.COMMON, getValue(loreLine, Rarity.COMMON));
+                    else if (loreLine.contains(Rarity.RARE.TAG.getString())) dummyProfileData.allRarityCounts.put(Rarity.RARE, getValue(loreLine, Rarity.RARE));
+                    else if (loreLine.contains(Rarity.EPIC.TAG.getString())) dummyProfileData.allRarityCounts.put(Rarity.EPIC, getValue(loreLine, Rarity.EPIC));
+                    else if (loreLine.contains(Rarity.LEGENDARY.TAG.getString())) dummyProfileData.allRarityCounts.put(Rarity.LEGENDARY, getValue(loreLine, Rarity.LEGENDARY));
+                    else if (loreLine.contains(Rarity.MYTHICAL.TAG.getString())) dummyProfileData.allRarityCounts.put(Rarity.MYTHICAL, getValue(loreLine, Rarity.MYTHICAL));
+                    else if (loreLine.contains(FishSize.BABY.TAG.getString())) dummyProfileData.allFishSizeCounts.put(FishSize.BABY, getValue(loreLine, FishSize.BABY));
+                    else if (loreLine.contains(FishSize.JUVENILE.TAG.getString())) dummyProfileData.allFishSizeCounts.put(FishSize.JUVENILE, getValue(loreLine, FishSize.JUVENILE));
+                    else if (loreLine.contains(FishSize.ADULT.TAG.getString())) dummyProfileData.allFishSizeCounts.put(FishSize.ADULT, getValue(loreLine, FishSize.ADULT));
+                    else if (loreLine.contains(FishSize.LARGE.TAG.getString())) dummyProfileData.allFishSizeCounts.put(FishSize.LARGE, getValue(loreLine, FishSize.LARGE));
+                    else if (loreLine.contains(FishSize.GIGANTIC.TAG.getString())) dummyProfileData.allFishSizeCounts.put(FishSize.GIGANTIC, getValue(loreLine, FishSize.GIGANTIC));
+                    else if (loreLine.contains(FishVariant.ALBINO.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.ALBINO, getValue(loreLine, FishVariant.ALBINO));
+                    else if (loreLine.contains(FishVariant.MELANISTIC.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.MELANISTIC, getValue(loreLine, FishVariant.MELANISTIC));
+                    else if (loreLine.contains(FishVariant.TROPHY.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.TROPHY, getValue(loreLine, FishVariant.TROPHY));
+                    else if (loreLine.contains(FishVariant.FABLED.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.FABLED, getValue(loreLine, FishVariant.FABLED));
+                    else if (loreLine.contains(FishVariant.SPOOKY.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.SPOOKY, getValue(loreLine, FishVariant.SPOOKY));
+                    else if (loreLine.contains(FishVariant.FROZEN.TAG.getString())) dummyProfileData.allVariantCounts.put(FishVariant.FROZEN, getValue(loreLine, FishVariant.FROZEN));
                     else if (loreLine.contains("ꜰɪꜱʜ ᴄᴀᴜɢʜᴛ")) fishCaught.set(getValue(loreLine));
                 });
             }
@@ -91,23 +94,23 @@ public class StatsImportHandler {
             dummyProfileData.allFishCaughtCount = fishCaught.get();
             dummyProfileData.petDryStreak = Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.petDryStreak), fishCaught.get());
             dummyProfileData.shardDryStreak = Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.shardDryStreak), fishCaught.get());
-            dummyProfileData.rarityDryStreak.put(Constant.COMMON, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Constant.COMMON, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.rarityDryStreak.put(Constant.RARE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Constant.RARE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.rarityDryStreak.put(Constant.EPIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Constant.EPIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.rarityDryStreak.put(Constant.LEGENDARY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Constant.LEGENDARY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.rarityDryStreak.put(Constant.MYTHICAL, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Constant.MYTHICAL, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.rarityDryStreak.put(Constant.SPECIAL, fishCaught.get());
-            dummyProfileData.fishSizeDryStreak.put(Constant.BABY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(Constant.BABY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.fishSizeDryStreak.put(Constant.JUVENILE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(Constant.JUVENILE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.fishSizeDryStreak.put(Constant.ADULT, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(Constant.ADULT, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.fishSizeDryStreak.put(Constant.LARGE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(Constant.LARGE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.fishSizeDryStreak.put(Constant.GIGANTIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(Constant.GIGANTIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.ALBINO, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.ALBINO, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.MELANISTIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.MELANISTIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.TROPHY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.TROPHY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.FABLED, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.FABLED, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.SPOOKY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.SPOOKY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
-            dummyProfileData.variantDryStreak.put(Constant.FROZEN, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(Constant.FROZEN, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.COMMON, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Rarity.COMMON, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.RARE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Rarity.RARE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.EPIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Rarity.EPIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.LEGENDARY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Rarity.LEGENDARY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.MYTHICAL, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.rarityDryStreak.getOrDefault(Rarity.MYTHICAL, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.rarityDryStreak.put(Rarity.SPECIAL, fishCaught.get());
+            dummyProfileData.fishSizeDryStreak.put(FishSize.BABY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(FishSize.BABY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.fishSizeDryStreak.put(FishSize.JUVENILE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(FishSize.JUVENILE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.fishSizeDryStreak.put(FishSize.ADULT, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(FishSize.ADULT, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.fishSizeDryStreak.put(FishSize.LARGE, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(FishSize.LARGE, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.fishSizeDryStreak.put(FishSize.GIGANTIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.fishSizeDryStreak.getOrDefault(FishSize.GIGANTIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.ALBINO, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.ALBINO, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.MELANISTIC, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.MELANISTIC, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.TROPHY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.TROPHY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.FABLED, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.FABLED, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.SPOOKY, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.SPOOKY, oldProfileData.allFishCaughtCount)), fishCaught.get()));
+            dummyProfileData.variantDryStreak.put(FishVariant.FROZEN, Math.min(fishCaught.get() - (oldProfileData.allFishCaughtCount - oldProfileData.variantDryStreak.getOrDefault(FishVariant.FROZEN, oldProfileData.allFishCaughtCount)), fishCaught.get()));
 
             this.dummyProfileData = dummyProfileData;
         }
@@ -178,8 +181,8 @@ public class StatsImportHandler {
         return isMe.get();
     }
 
-    private int getValue(String line, Constant prefix) {
-        return toIntFromString(line.substring(line.indexOf(prefix.TAG.getString()) + prefix.TAG.getString().length()));
+    private int getValue(String line, EnumConstant prefix) {
+        return toIntFromString(line.substring(line.indexOf(prefix.tag().getString()) + prefix.tag().getString().length()));
     }
 
     private int getValue(String line) {

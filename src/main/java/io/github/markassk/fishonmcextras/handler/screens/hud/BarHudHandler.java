@@ -1,8 +1,8 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.WeatherType;
 import io.github.markassk.fishonmcextras.FOMC.LevelColors;
-import io.github.markassk.fishonmcextras.FOMC.LocationInfo;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.BossBarHandler;
 import io.github.markassk.fishonmcextras.handler.ScoreboardHandler;
@@ -45,29 +45,29 @@ public class BarHudHandler {
 
     public Text assembleMiddleText() {
         Text weather;
-        if(BossBarHandler.instance().weather.contains(Constant.SUN.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.SUN.COLOR);
-        } else if(BossBarHandler.instance().weather.contains(Constant.RAIN.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.RAIN.COLOR);
-        } else if(BossBarHandler.instance().weather.contains(Constant.THUNDERSTORM.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.THUNDERSTORM.COLOR);
-        } else if(BossBarHandler.instance().weather.contains(Constant.BLOOMINGOASIS.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.BLOOMINGOASIS.COLOR);
-        } else if(BossBarHandler.instance().weather.contains(Constant.FABLEDWEATHER.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.FABLEDWEATHER.COLOR);
-        } else if(BossBarHandler.instance().weather.contains(Constant.GOLDRUSH.ID)) {
-            weather = Text.literal(BossBarHandler.instance().weather).withColor(Constant.GOLDRUSH.COLOR);
+        if(BossBarHandler.instance().weather.contains(WeatherType.SUN.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.SUN.COLOR);
+        } else if(BossBarHandler.instance().weather.contains(WeatherType.RAIN.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.RAIN.COLOR);
+        } else if(BossBarHandler.instance().weather.contains(WeatherType.THUNDERSTORM.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.THUNDERSTORM.COLOR);
+        } else if(BossBarHandler.instance().weather.contains(WeatherType.BLOOMINGOASIS.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.BLOOMINGOASIS.COLOR);
+        } else if(BossBarHandler.instance().weather.contains(WeatherType.FABLEDWEATHER.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.FABLEDWEATHER.COLOR);
+        } else if(BossBarHandler.instance().weather.contains(WeatherType.GOLDRUSH.ID)) {
+            weather = Text.literal(BossBarHandler.instance().weather).withColor(WeatherType.GOLDRUSH.COLOR);
         } else{
             // Moon
             weather = Text.literal(BossBarHandler.instance().weather);
         }
         Text time = Text.empty();
 
-        if(BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND) {
+        if(BossBarHandler.instance().currentLocation != Location.CREW_ISLAND) {
             time = Text.literal(" ").append(weather).append(Text.literal(" ")).append(Text.literal(BossBarHandler.instance().time).formatted(Formatting.WHITE)).append(BossBarHandler.instance().timeSuffix.contains("AM") ? Text.literal("ᴀᴍ").formatted(Formatting.GRAY) : Text.literal("ᴘᴍ").formatted(Formatting.GRAY));
         }
 
-        Text locationCatch = !Objects.equals(ScoreboardHandler.instance().locationMin, ScoreboardHandler.instance().locationMax) && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND ? TextHelper.concat(
+        Text locationCatch = !Objects.equals(ScoreboardHandler.instance().locationMin, ScoreboardHandler.instance().locationMax) && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND ? TextHelper.concat(
                 Text.literal(" (").formatted(Formatting.DARK_GRAY),
                 Text.literal(ScoreboardHandler.instance().locationMin).formatted(Formatting.GOLD),
                 Text.literal("/").formatted(Formatting.GRAY),
@@ -77,9 +77,9 @@ public class BarHudHandler {
 
         // Add climate information if enabled and not in crew island
         Text climateText = Text.empty();
-        if(config.barHUD.showClimate && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND && BossBarHandler.instance().currentLocation != Constant.UNKNOWN) {
-            LocationInfo locationInfo = LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID);
-            if(locationInfo != LocationInfo.DEFAULT) {
+        if(config.barHUD.showClimate && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND && BossBarHandler.instance().currentLocation != Location.UNKNOWN) {
+            Location locationInfo = BossBarHandler.instance().currentLocation;
+            if(locationInfo != Location.UNKNOWN) {
                 climateText = TextHelper.concat(
                         Text.literal(" ").formatted(Formatting.DARK_GRAY),
                         Text.literal("[").formatted(Formatting.DARK_GRAY),

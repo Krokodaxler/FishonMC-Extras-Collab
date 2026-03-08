@@ -1,5 +1,6 @@
 package io.github.markassk.fishonmcextras.handler.screens.petCalculator;
 
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetRating;
 import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.PetCalculatorHandler;
@@ -99,11 +100,11 @@ public class PetCalculatorScreenHandler {
         textPet.add(Text.empty());
         textPet.add(Text.literal("ᴘᴇᴛ ʀᴀᴛɪɴɢ").formatted(Formatting.GRAY, Formatting.BOLD));
         textPet.add(TextHelper.concat(
-                Pet.getConstantFromPercent(pet.percentPetRating).TAG,
+                PetRating.LOOKUP.valueOfPercent(pet.percentPetRating).TAG,
                 Text.literal(" ("),
                 Text.literal(TextHelper.fmt(pet.percentPetRating * 100, config.petTooltip.decimalPlaces)),
                 Text.literal("%)")
-        ).withColor(Pet.getConstantFromPercent(pet.percentPetRating).COLOR));
+        ).withColor(PetRating.LOOKUP.valueOfPercent(pet.percentPetRating).COLOR));
 
         return textPet;
     }

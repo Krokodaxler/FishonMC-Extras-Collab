@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
@@ -12,13 +12,13 @@ import java.util.Objects;
 public class Shard extends FOMCItem {
     public final String climateId;
     public final CustomModelDataComponent customModelData;
-    public final Constant rarity;
+    public final Rarity rarity;
 
     private Shard(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.DEFAULT);
+        super(type, Rarity.UNKNOWN);
         this.climateId = nbtCompound.getString("name");
         this.customModelData = customModelData;
-        this.rarity = Constant.valueOfId(nbtCompound.getString("rarity"));
+        this.rarity = Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity"));
     }
 
     public static Shard getShard(ItemStack itemStack, String type) {

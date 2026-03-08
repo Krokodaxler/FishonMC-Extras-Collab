@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.*;
 import io.github.markassk.fishonmcextras.FOMC.Types.Fish;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
@@ -17,7 +17,7 @@ public class QuestHandler {
     private static QuestHandler INSTANCE = new QuestHandler();
     private boolean hasInitialized = false;
 
-    public Map<Constant, List<Quest>> activeQuests = new HashMap<>();
+    public Map<Location, List<Quest>> activeQuests = new EnumMap<>(Location.class);
     public boolean questMenuState = false;
 
     public static QuestHandler instance() {
@@ -70,8 +70,8 @@ public class QuestHandler {
             }
 
             if(!quests.isEmpty()) {
-                if(BossBarHandler.instance().currentLocation == Constant.SPAWNHUB) {
-                    activeQuests.put(Constant.CYPRESS_LAKE, quests);
+                if(BossBarHandler.instance().currentLocation == Location.SPAWNHUB) {
+                    activeQuests.put(Location.CYPRESS_LAKE, quests);
                 } else {
                     activeQuests.put(BossBarHandler.instance().currentLocation, quests);
                 }
@@ -85,10 +85,10 @@ public class QuestHandler {
     }
 
     public void updateQuest(Fish fish) {
-        List<Quest> currentLocationQuests = BossBarHandler.instance().currentLocation == Constant.SPAWNHUB ? this.activeQuests.get(Constant.CYPRESS_LAKE) : this.activeQuests.get(BossBarHandler.instance().currentLocation);
+        List<Quest> currentLocationQuests = BossBarHandler.instance().currentLocation == Location.SPAWNHUB ? this.activeQuests.get(Location.CYPRESS_LAKE) : this.activeQuests.get(BossBarHandler.instance().currentLocation);
         if(currentLocationQuests != null) {
             currentLocationQuests.forEach(quest -> {
-                if(quest.goal == fish.rarity || quest.goal == fish.size) {
+                if(quest.goal != null && (quest.goal.equals(fish.rarity.name()) || quest.goal.equals(fish.size.name()))) {
                     quest.incrementProgress();
                 }
             });
@@ -116,22 +116,33 @@ public class QuestHandler {
             }
         });
 
-        return new Quest(Constant.valueOfId(goal.get()), Integer.parseInt(progress.get()), Integer.parseInt(needed.get()), slot);
+        return new Quest(goal.get().toUpperCase(Locale.ROOT), Integer.parseInt(progress.get()), Integer.parseInt(needed.get()), slot);
+    }
+
+    private static EnumConstant getGoalEnum(String goal) {
+        return switch (goal.toUpperCase()) {
+            case "ADULT" -> FishSize.ADULT;
+            case "LARGE" -> FishSize.LARGE;
+            case "RARE" -> Rarity.RARE;
+            case "EPIC" -> Rarity.EPIC;
+            case "LEGENDARY" -> Rarity.LEGENDARY;
+            default -> Rarity.UNKNOWN;
+        };
     }
 
     public boolean isQuestInitialized() {
-        return BossBarHandler.instance().currentLocation == Constant.SPAWNHUB ? activeQuests.containsKey(Constant.CYPRESS_LAKE) : activeQuests.containsKey(BossBarHandler.instance().currentLocation);
+        return BossBarHandler.instance().currentLocation == Location.SPAWNHUB ? activeQuests.containsKey(Location.CYPRESS_LAKE) : activeQuests.containsKey(BossBarHandler.instance().currentLocation);
     }
 
     public static class Quest {
-        public Constant goal;
+        public String goal;
         public int progress;
         public int needed;
         private boolean questDone;
         public final boolean isStarted;
         public final int slot;
 
-        public Quest(Constant goal, int progress, int needed, int slot){
+        public Quest(String goal, int progress, int needed, int slot){
             this.goal = goal;
             this.progress = progress;
             this.needed = needed;
@@ -148,6 +159,10 @@ public class QuestHandler {
             this.questDone = questDone;
             this.isStarted = true;
             this.slot = slot;
+        }
+
+        public EnumConstant getGoalEnum() {
+            return QuestHandler.getGoalEnum(this.goal);
         }
 
         public void incrementProgress() {

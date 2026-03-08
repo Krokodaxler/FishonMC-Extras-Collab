@@ -1,13 +1,12 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 import io.github.markassk.fishonmcextras.screens.widget.container.ContainerButtonWidget;
 import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +48,11 @@ public class PersonalVaultScreenHandler {
                                         Text.literal("Page " + i).formatted(Formatting.BOLD, Formatting.WHITE),
                                         Text.literal("\n\n"),
                                         Text.literal("Requires atleast ").formatted(Formatting.WHITE, Formatting.ITALIC),
-                                        i == 2 ? Text.literal(Constant.ANGLER.TAG.getString()).formatted(Formatting.WHITE) :
-                                                i == 3 ? Text.literal(Constant.SAILOR.TAG.getString()).formatted(Formatting.WHITE) :
-                                                        i == 4 ? Text.literal(Constant.MARINER.TAG.getString()).formatted(Formatting.WHITE) :
-                                                                i == 5 ? Text.literal(Constant.CAPTAIN.TAG.getString()).formatted(Formatting.WHITE) :
-                                                                        Text.literal(Constant.ADMIRAL.TAG.getString()).formatted(Formatting.WHITE)
+                                        i == 2 ? Text.literal(PlayerRank.ANGLER.TAG.getString()).formatted(Formatting.WHITE) :
+                                                i == 3 ? Text.literal(PlayerRank.SAILOR.TAG.getString()).formatted(Formatting.WHITE) :
+                                                        i == 4 ? Text.literal(PlayerRank.MARINER.TAG.getString()).formatted(Formatting.WHITE) :
+                                                                i == 5 ? Text.literal(PlayerRank.CAPTAIN.TAG.getString()).formatted(Formatting.WHITE) :
+                                                                        Text.literal(PlayerRank.ADMIRAL.TAG.getString()).formatted(Formatting.WHITE)
                                 )
                 ), minecraftClient));
             }

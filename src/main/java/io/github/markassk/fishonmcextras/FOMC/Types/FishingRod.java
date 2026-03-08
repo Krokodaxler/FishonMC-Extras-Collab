@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import io.github.markassk.fishonmcextras.util.NbtHelper;
 import io.github.markassk.fishonmcextras.util.UUIDHelper;
@@ -28,7 +28,7 @@ public class FishingRod extends FOMCItem {
     public final Reel reel;
 
     private FishingRod(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData, String name) {
-        super(type, Constant.DEFAULT);
+        super(type, Rarity.UNKNOWN);
         this.name = name;
         this.customModelData = customModelData;
         this.soulboundRod = nbtCompound.getBoolean("soulbound_rod");

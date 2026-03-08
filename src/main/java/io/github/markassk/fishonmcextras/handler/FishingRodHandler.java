@@ -1,7 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
-import io.github.markassk.fishonmcextras.FOMC.LocationInfo;
+import io.github.markassk.fishonmcextras.FOMC.Enums.WaterType;
 import io.github.markassk.fishonmcextras.FOMC.Types.Bait;
 import io.github.markassk.fishonmcextras.FOMC.Types.FishingRod;
 import io.github.markassk.fishonmcextras.FOMC.Types.Lure;
@@ -73,10 +72,10 @@ public class FishingRodHandler {
         if(this.fishingRod != null) {
             if(!this.fishingRod.tacklebox.isEmpty()) {
                 // Bait
-                if(this.fishingRod.tacklebox.getFirst() instanceof Bait bait && bait.water != Constant.ANY_WATER) {
-                    this.isWrongBait = bait.water != LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER;
-                } else if (this.fishingRod.tacklebox.getFirst() instanceof Lure lure && lure.water != Constant.ANY_WATER) {
-                    this.isWrongLure = lure.water != LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER;
+                if(this.fishingRod.tacklebox.getFirst() instanceof Bait bait && bait.water != WaterType.ANY) {
+                    this.isWrongBait = bait.water != BossBarHandler.instance().currentLocation.WATER;
+                } else if (this.fishingRod.tacklebox.getFirst() instanceof Lure lure && lure.water != WaterType.ANY) {
+                    this.isWrongLure = lure.water != BossBarHandler.instance().currentLocation.WATER;
                 } else {
                     this.isWrongBait = false;
                     this.isWrongLure = false;
@@ -86,20 +85,20 @@ public class FishingRodHandler {
                 this.isWrongLure = false;
             }
 
-            if(this.fishingRod.reel != null && this.fishingRod.reel.water != Constant.GLOBAL_WATER) {
-                this.isWrongReel = this.fishingRod.reel.water != LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER;
+            if(this.fishingRod.reel != null && this.fishingRod.reel.water != WaterType.GLOBAL) {
+                this.isWrongReel = this.fishingRod.reel.water != BossBarHandler.instance().currentLocation.WATER;
             } else {
                 this.isWrongReel = false;
             }
 
-            if(this.fishingRod.pole != null && this.fishingRod.pole.water != Constant.GLOBAL_WATER) {
-                this.isWrongPole = this.fishingRod.pole.water != LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER;
+            if(this.fishingRod.pole != null && this.fishingRod.pole.water != WaterType.GLOBAL) {
+                this.isWrongPole = this.fishingRod.pole.water != BossBarHandler.instance().currentLocation.WATER;
             } else {
                 this.isWrongPole = false;
             }
 
-            if(this.fishingRod.line != null && this.fishingRod.line.water != Constant.GLOBAL_WATER) {
-                this.isWrongLine = this.fishingRod.line.water != LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).WATER;
+            if(this.fishingRod.line != null && this.fishingRod.line.water != WaterType.GLOBAL) {
+                this.isWrongLine = this.fishingRod.line.water != BossBarHandler.instance().currentLocation.WATER;
             } else {
                 this.isWrongLine = false;
             }

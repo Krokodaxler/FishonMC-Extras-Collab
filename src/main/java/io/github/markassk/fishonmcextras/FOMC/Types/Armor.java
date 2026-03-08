@@ -1,7 +1,7 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.ClimateConstant;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Climate;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ColorHelper;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import io.github.markassk.fishonmcextras.util.UUIDHelper;
@@ -9,7 +9,6 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 
 import java.util.ArrayList;
@@ -24,14 +23,14 @@ public class Armor extends FOMCItem {
     public final int quality;
     public final boolean identified;
     public final String armorPiece;
-    public final ClimateConstant climate;
+    public final Climate climate;
     public final UUID crafter;
     public final ArmorStat luck;
     public final ArmorStat scale;
     public final ArmorStat prospect;
 
     private Armor(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         List<ArmorBonus> tempArmorBonuses;
         NbtList nbtFishBonusList = (NbtList) nbtCompound.get("fish_bonus");
         tempArmorBonuses = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Armor extends FOMCItem {
         this.quality = nbtCompound.getInt("quality");
         this.identified = nbtCompound.getBoolean("identified");
         this.armorPiece = nbtCompound.getString("piece");
-        this.climate = ClimateConstant.valueOfId(nbtCompound.getString("name"));
+        this.climate = Climate.LOOKUP.valueOfId(nbtCompound.getString("name"));
         this.crafter = UUIDHelper.getUUID(nbtCompound.getIntArray("uuid"));
 
         NbtList armorStatsList = (NbtList) nbtCompound.get("base");

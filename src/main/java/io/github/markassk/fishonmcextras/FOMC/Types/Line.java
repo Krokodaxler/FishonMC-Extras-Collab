@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
+import io.github.markassk.fishonmcextras.FOMC.Enums.WaterType;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
@@ -16,14 +17,14 @@ import java.util.Objects;
 public class Line extends FOMCItem {
     public final String name;
     public final CustomModelDataComponent customModelData;
-    public final Constant water;
+    public final WaterType water;
     public final List<LineStats> lineStats;
 
     private Line(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
+        super(type, Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity")));
         this.name = nbtCompound.getString("name");
         this.customModelData = customModelData;
-        this.water = Constant.valueOfId(nbtCompound.getString("water"));
+        this.water = WaterType.LOOKUP.valueOfId(nbtCompound.getString("water"));
         NbtList nbtList = nbtCompound.getList("base", NbtElement.LIST_TYPE);
         List<NbtCompound> nbtCompoundList = new ArrayList<>();
         for (int i = 0; i < nbtList.size(); i++) {

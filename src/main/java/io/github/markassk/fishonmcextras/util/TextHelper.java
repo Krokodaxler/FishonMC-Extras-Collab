@@ -3,7 +3,7 @@ package io.github.markassk.fishonmcextras.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PlayerRank;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -122,16 +122,16 @@ public class TextHelper {
     }
 
     public static String replaceToFoE(String text) {
-        if (text.contains(Constant.ANGLER.TAG.getString()))
-            text = text.replace(Constant.ANGLER.TAG.getString(), Constant.FOE.TAG.getString());
-        if (text.contains(Constant.SAILOR.TAG.getString()))
-            text = text.replace(Constant.SAILOR.TAG.getString(), Constant.FOE.TAG.getString());
-        if (text.contains(Constant.MARINER.TAG.getString()))
-            text = text.replace(Constant.MARINER.TAG.getString(), Constant.FOE.TAG.getString());
-        if (text.contains(Constant.CAPTAIN.TAG.getString()))
-            text = text.replace(Constant.CAPTAIN.TAG.getString(), Constant.FOE.TAG.getString());
-        if (text.contains(Constant.ADMIRAL.TAG.getString()))
-            text = text.replace(Constant.ADMIRAL.TAG.getString(), Constant.FOE.TAG.getString());
+        if (text.contains(PlayerRank.ANGLER.TAG.getString()))
+            text = text.replace(PlayerRank.ANGLER.TAG.getString(), PlayerRank.FOE.TAG.getString());
+        if (text.contains(PlayerRank.SAILOR.TAG.getString()))
+            text = text.replace(PlayerRank.SAILOR.TAG.getString(), PlayerRank.FOE.TAG.getString());
+        if (text.contains(PlayerRank.MARINER.TAG.getString()))
+            text = text.replace(PlayerRank.MARINER.TAG.getString(), PlayerRank.FOE.TAG.getString());
+        if (text.contains(PlayerRank.CAPTAIN.TAG.getString()))
+            text = text.replace(PlayerRank.CAPTAIN.TAG.getString(), PlayerRank.FOE.TAG.getString());
+        if (text.contains(PlayerRank.ADMIRAL.TAG.getString()))
+            text = text.replace(PlayerRank.ADMIRAL.TAG.getString(), PlayerRank.FOE.TAG.getString());
         return text;
     }
 

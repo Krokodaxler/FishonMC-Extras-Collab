@@ -1,6 +1,9 @@
 package io.github.markassk.fishonmcextras.commands.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishSize;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishVariant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.RareCatch;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.TextHelper;
 import io.github.markassk.fishonmcextras.handler.ProfileDataHandler;
 
@@ -65,13 +68,13 @@ public class DrystreakTypesCommandHandler {
                 return 
                 List.of(TextHelper.concat(
                     Text.literal("─ ʀᴀʀɪᴛɪᴇs: \n"),
-                    Text.literal("└ "), Constant.COMMON.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Constant.COMMON, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.RARE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Constant.RARE, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.EPIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Constant.EPIC, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.LEGENDARY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Constant.LEGENDARY, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.MYTHICAL.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Constant.MYTHICAL, 0)))));
+                    Text.literal("└ "), Rarity.COMMON.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Rarity.COMMON, 0))), Text.literal("\n"),
+                    Text.literal("└ "), Rarity.RARE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Rarity.RARE, 0))), Text.literal("\n"),
+                    Text.literal("└ "), Rarity.EPIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Rarity.EPIC, 0))), Text.literal("\n"),
+                    Text.literal("└ "), Rarity.LEGENDARY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Rarity.LEGENDARY, 0))), Text.literal("\n"),
+                    Text.literal("└ "), Rarity.MYTHICAL.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(Rarity.MYTHICAL, 0)))));
             default:
-                Constant rarityConstant = Constant.valueOf(rarity.toUpperCase());
+                Rarity rarityConstant = Rarity.LOOKUP.valueOfId(rarity.toLowerCase());
                 return List.of(TextHelper.concat(
                     Text.literal("└ "), rarityConstant.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.rarityDryStreak.getOrDefault(rarityConstant, 0)))));
         }
@@ -83,13 +86,13 @@ public class DrystreakTypesCommandHandler {
                 return 
                 List.of(TextHelper.concat(
                     Text.literal("─ sɪᴢᴇs: \n"),
-                    Text.literal("└ "), Constant.BABY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(Constant.BABY, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.JUVENILE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(Constant.JUVENILE, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.ADULT.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(Constant.ADULT, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.LARGE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(Constant.LARGE, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.GIGANTIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(Constant.GIGANTIC, 0)))));
+                    Text.literal("└ "), FishSize.BABY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(FishSize.BABY, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishSize.JUVENILE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(FishSize.JUVENILE, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishSize.ADULT.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(FishSize.ADULT, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishSize.LARGE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(FishSize.LARGE, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishSize.GIGANTIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(FishSize.GIGANTIC, 0)))));
             default:
-                Constant sizeConstant = Constant.valueOf(size.toUpperCase());
+                FishSize sizeConstant = FishSize.LOOKUP.valueOfId(size.toLowerCase());
                 return List.of(TextHelper.concat(
                     Text.literal("└ "), sizeConstant.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.fishSizeDryStreak.getOrDefault(sizeConstant, 0)))));
         }
@@ -101,12 +104,12 @@ public class DrystreakTypesCommandHandler {
                 return 
                 List.of(TextHelper.concat(
                     Text.literal("─ ᴠᴀʀɪᴀɴᴛs: \n"),
-                    Text.literal("└ "), Constant.ALBINO.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(Constant.ALBINO, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.MELANISTIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(Constant.MELANISTIC, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.TROPHY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(Constant.TROPHY, 0))), Text.literal("\n"),
-                    Text.literal("└ "), Constant.FABLED.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(Constant.FABLED, 0)))));
+                    Text.literal("└ "), FishVariant.ALBINO.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(FishVariant.ALBINO, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishVariant.MELANISTIC.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(FishVariant.MELANISTIC, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishVariant.TROPHY.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(FishVariant.TROPHY, 0))), Text.literal("\n"),
+                    Text.literal("└ "), FishVariant.FABLED.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(FishVariant.FABLED, 0)))));
             default:
-                Constant variantConstant = Constant.valueOf(variant.toUpperCase());
+                FishVariant variantConstant = FishVariant.LOOKUP.valueOfId(variant.toLowerCase());
                 return List.of(TextHelper.concat(
                     Text.literal("└ "), variantConstant.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.variantDryStreak.getOrDefault(variantConstant, 0)))));
         }
@@ -117,19 +120,19 @@ public class DrystreakTypesCommandHandler {
             case "pet":
                 return 
                 List.of(TextHelper.concat(
-                    Text.literal("└ "), Constant.PET.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.petDryStreak))));
+                    Text.literal("└ "), RareCatch.PET.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.petDryStreak))));
             case "shard":
                 return 
                 List.of(TextHelper.concat(
-                    Text.literal("└ "), Constant.SHARD.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.shardDryStreak))));
+                    Text.literal("└ "), RareCatch.SHARD.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.shardDryStreak))));
             case "infusioncapsule":
                 return 
                 List.of(TextHelper.concat(
-                    Text.literal("└ "), Constant.INFUSION_CAPSULE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.infusionCapsuleDryStreak))));
+                    Text.literal("└ "), RareCatch.INFUSION_CAPSULE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.infusionCapsuleDryStreak))));
             case "lightningbottle":
                 return 
                 List.of(TextHelper.concat(
-                    Text.literal("└ "), Constant.LIGHTNING_BOTTLE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.lightningBottleDryStreak))));
+                    Text.literal("└ "), RareCatch.LIGHTNING_BOTTLE.TAG, Text.literal(" "), Text.literal(TextHelper.fmt(allFishCaught - profileData.lightningBottleDryStreak))));
             default:
                 return List.of(Text.literal("Invalid drystreak type specified."));
         }

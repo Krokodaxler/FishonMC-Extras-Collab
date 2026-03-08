@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.*;
 import io.github.markassk.fishonmcextras.FOMC.Types.Fish;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
@@ -124,14 +124,10 @@ public class FishCatchHandler {
 	}
 
 	public void catchSubtitle(Text title) {
-		if (title.getString().contains(Constant.COMMON.TAG.getString())
-				|| title.getString().contains(Constant.RARE.TAG.getString())
-				|| title.getString().contains(Constant.EPIC.TAG.getString())
-				|| title.getString().contains(Constant.LEGENDARY.TAG.getString())
-				|| title.getString().contains(Constant.MYTHICAL.TAG.getString())
-				|| title.getString().contains(Constant.SPECIAL.TAG.getString())) {
-			this.subtitle = title;
-		}
+        Rarity rarity = Rarity.LOOKUP.findContainingTag(title.getString());
+        if (rarity != Rarity.UNKNOWN) {
+            this.subtitle = title;
+        }
 	}
 
 	public void reset() {
@@ -149,7 +145,7 @@ public class FishCatchHandler {
 			FishOnMCExtras.LOGGER.info("[FoE] Tracking Pet");
 
 			if (config.fishTracker.dryStreakMessageToggles.otherMessageToggles.showPet) {
-				sendItemDryStreakMessage("pet", oldPetDryStreak);
+				sendItemDryStreakMessage(RareCatch.PET, oldPetDryStreak);
 			}
 		}
 
@@ -161,7 +157,7 @@ public class FishCatchHandler {
 			DailyQuestHandler.instance().updateQuest("Shards Caught");
 
 			if (config.fishTracker.dryStreakMessageToggles.otherMessageToggles.showShard) {
-				sendItemDryStreakMessage("shard", oldShardDryStreak);
+				sendItemDryStreakMessage(RareCatch.SHARD, oldShardDryStreak);
 			}
 		}
 
@@ -173,7 +169,7 @@ public class FishCatchHandler {
 			FishOnMCExtras.LOGGER.info("[FoE] Tracking Lightning Bottle");
 
 			if (config.fishTracker.dryStreakMessageToggles.otherMessageToggles.showLightningBottle) {
-				sendItemDryStreakMessage("lightning bottle", oldLightningBottleDryStreak);
+				sendItemDryStreakMessage(RareCatch.LIGHTNING_BOTTLE, oldLightningBottleDryStreak);
 			}
 		}
 
@@ -184,7 +180,7 @@ public class FishCatchHandler {
 			FishOnMCExtras.LOGGER.info("[FoE] Tracking Infusion Capsule");
 
 			if (config.fishTracker.dryStreakMessageToggles.otherMessageToggles.showInfusionCapsule) {
-				sendItemDryStreakMessage("infusion capsule", oldInfusionCapsuleDryStreak);
+				sendItemDryStreakMessage(RareCatch.INFUSION_CAPSULE, oldInfusionCapsuleDryStreak);
 			}
 		}
 
@@ -224,7 +220,7 @@ public class FishCatchHandler {
 			ProfileDataHandler.instance().updateStatsOnCatch();
 			QuestHandler.instance().updateQuest(fish);
 			DailyQuestHandler.instance().updateQuest("Total Caught");
-			if (fish.rarity == Constant.MYTHICAL) {
+			if (fish.rarity == Rarity.MYTHICAL) {
 				DailyQuestHandler.instance().updateQuest("Mythical Caught");
 			}
 			PetEquipHandler.instance().updatePet(minecraftClient.player);
@@ -236,9 +232,9 @@ public class FishCatchHandler {
 
 				// Check if we are in the right location for the contest
 				boolean locationMatches = Objects.equals(
-						Objects.requireNonNull(Constant.valueOfTag(contestHandler.location)) == Constant.SPAWNHUB
-								? Constant.CYPRESS_LAKE.ID
-								: Objects.requireNonNull(Constant.valueOfTag(contestHandler.location).ID),
+						Location.LOOKUP.valueOfTag(contestHandler.location) == Location.SPAWNHUB
+								? Location.CYPRESS_LAKE.ID
+								: Objects.requireNonNull(Location.LOOKUP.valueOfTag(contestHandler.location).ID),
 						BossBarHandler.instance().currentLocation.ID);
 
 				if (contestHandler.isContest && typecheck.contains(fish.groupId.toLowerCase())
@@ -323,51 +319,51 @@ public class FishCatchHandler {
 	}
 
 	public void onFishCaughtSendDryStreak(Fish fish) {
-		if (fish.rarity == Constant.COMMON
+		if (fish.rarity == Rarity.COMMON
 				&& config.fishTracker.dryStreakMessageToggles.rarityMessageToggles.showCommon ||
-				fish.rarity == Constant.RARE
+				fish.rarity == Rarity.RARE
 						&& config.fishTracker.dryStreakMessageToggles.rarityMessageToggles.showRare
 				||
-				fish.rarity == Constant.EPIC
+				fish.rarity == Rarity.EPIC
 						&& config.fishTracker.dryStreakMessageToggles.rarityMessageToggles.showEpic
 				||
-				fish.rarity == Constant.LEGENDARY
+				fish.rarity == Rarity.LEGENDARY
 						&& config.fishTracker.dryStreakMessageToggles.rarityMessageToggles.showLegendary
 				||
-				fish.rarity == Constant.MYTHICAL
+				fish.rarity == Rarity.MYTHICAL
 						&& config.fishTracker.dryStreakMessageToggles.rarityMessageToggles.showMythical) {
 
 			sendFishDryStreakMessage(fish.rarity,
 					ProfileDataHandler.instance().profileData.rarityDryStreak.getOrDefault(fish.rarity, 0));
 		}
 
-		if (fish.size == Constant.BABY
+		if (fish.size == FishSize.BABY
 				&& config.fishTracker.dryStreakMessageToggles.sizeMessageToggles.showBaby ||
-				fish.size == Constant.JUVENILE
+				fish.size == FishSize.JUVENILE
 						&& config.fishTracker.dryStreakMessageToggles.sizeMessageToggles.showJuvenile
 				||
-				fish.size == Constant.ADULT
+				fish.size == FishSize.ADULT
 						&& config.fishTracker.dryStreakMessageToggles.sizeMessageToggles.showAdult
 				||
-				fish.size == Constant.LARGE
+				fish.size == FishSize.LARGE
 						&& config.fishTracker.dryStreakMessageToggles.sizeMessageToggles.showLarge
 				||
-				fish.size == Constant.GIGANTIC
+				fish.size == FishSize.GIGANTIC
 						&& config.fishTracker.dryStreakMessageToggles.sizeMessageToggles.showGigantic) {
 
 			sendFishDryStreakMessage(fish.size,
 					ProfileDataHandler.instance().profileData.fishSizeDryStreak.getOrDefault(fish.size, 0));
 		}
 
-		if (fish.variant == Constant.ALBINO
+		if (fish.variant == FishVariant.ALBINO
 				&& config.fishTracker.dryStreakMessageToggles.variantMessageToggles.showAlbino ||
-				fish.variant == Constant.MELANISTIC
+				fish.variant == FishVariant.MELANISTIC
 						&& config.fishTracker.dryStreakMessageToggles.variantMessageToggles.showMelanistic
 				||
-				fish.variant == Constant.TROPHY
+				fish.variant == FishVariant.TROPHY
 						&& config.fishTracker.dryStreakMessageToggles.variantMessageToggles.showTrophy
 				||
-				fish.variant == Constant.FABLED
+				fish.variant == FishVariant.FABLED
 						&& config.fishTracker.dryStreakMessageToggles.variantMessageToggles.showFabled) {
 
 			sendFishDryStreakMessage(fish.variant,
@@ -375,56 +371,54 @@ public class FishCatchHandler {
 		}
 	}
 
-	private void sendFishDryStreakMessage(Constant fish, int lastCaught) {
+	private void sendFishDryStreakMessage(EnumConstant fish, int lastCaught) {
 		boolean showText = config.fishTracker.dryStreakMessageToggles.showText;
 		TextDisplayHandler.TextDisplay formatting = config.fishTracker.dryStreakMessageToggles.textCapitalization;
-		Text fishText = fish.TAG;
+		Text fishText = fish.tag();
 		String lower;
 		boolean useAn;
 
 		if (!(config.fishTracker.dryStreakMessageToggles.textCapitalization == TextDisplayHandler.TextDisplay.OFF)) {
 			fishText = showText ? switch (fish) {
 				// Rarities
-				case COMMON -> Text.literal(TextDisplayHandler.formatText("Common", formatting)).withColor(0xFFFFFF);
-				case RARE -> Text.literal(TextDisplayHandler.formatText("Rare", formatting)).withColor(0x2B85C4);
-				case EPIC -> Text.literal(TextDisplayHandler.formatText("Epic", formatting)).withColor(0x1CD832);
-				case LEGENDARY ->
+                case Rarity.COMMON -> Text.literal(TextDisplayHandler.formatText("Common", formatting)).withColor(0xFFFFFF);
+				case Rarity.RARE -> Text.literal(TextDisplayHandler.formatText("Rare", formatting)).withColor(0x2B85C4);
+				case Rarity.EPIC -> Text.literal(TextDisplayHandler.formatText("Epic", formatting)).withColor(0x1CD832);
+				case Rarity.LEGENDARY ->
 					Text.literal(TextDisplayHandler.formatText("Legendary", formatting)).withColor(0xD98103);
-				case MYTHICAL ->
+				case Rarity.MYTHICAL ->
 					Text.literal(TextDisplayHandler.formatText("Mythical", formatting)).withColor(0xC93832);
 
 				// Sizes
-				case BABY -> Text.literal(TextDisplayHandler.formatText("Baby", formatting)).withColor(0x468CE7);
-				case JUVENILE ->
+                case FishSize.BABY -> Text.literal(TextDisplayHandler.formatText("Baby", formatting)).withColor(0x468CE7);
+				case FishSize.JUVENILE ->
 					Text.literal(TextDisplayHandler.formatText("Juvenile", formatting)).withColor(0x22EA08);
-				case ADULT -> Text.literal(TextDisplayHandler.formatText("Adult", formatting)).withColor(0x1C7DA0);
-				case LARGE -> Text.literal(TextDisplayHandler.formatText("Large", formatting)).withColor(0xFF9000);
-				case GIGANTIC ->
+				case FishSize.ADULT -> Text.literal(TextDisplayHandler.formatText("Adult", formatting)).withColor(0x1C7DA0);
+				case FishSize.LARGE -> Text.literal(TextDisplayHandler.formatText("Large", formatting)).withColor(0xFF9000);
+				case FishSize.GIGANTIC ->
 					Text.literal(TextDisplayHandler.formatText("Gigantic", formatting)).withColor(0xAF3333);
 
 				// Variants
-				case ALBINO -> Text.literal(TextDisplayHandler.formatText("Albino", formatting)).withColor(0xC6C3A1);
-				case MELANISTIC ->
+                case FishVariant.ALBINO -> Text.literal(TextDisplayHandler.formatText("Albino", formatting)).withColor(0xC6C3A1);
+				case FishVariant.MELANISTIC ->
 					Text.literal(TextDisplayHandler.formatText("Melanistic", formatting)).withColor(0x1C1C1C);
-				case TROPHY -> Text.literal(TextDisplayHandler.formatText("Trophy", formatting)).withColor(0xD8C13C);
-				case FABLED -> Text.literal(TextDisplayHandler.formatText("Fabled", formatting)).withColor(0xCE2326);
+				case FishVariant.TROPHY -> Text.literal(TextDisplayHandler.formatText("Trophy", formatting)).withColor(0xD8C13C);
+				case FishVariant.FABLED -> Text.literal(TextDisplayHandler.formatText("Fabled", formatting)).withColor(0xCE2326);
 
-				default -> fish.TAG;
-			} : fish.TAG;
+				default -> fish.tag();
+			} : fish.tag();
 
 			lower = fish.toString().toLowerCase(Locale.ROOT).trim();
 		} else {
-			lower = fish.ID.toLowerCase(Locale.ROOT).trim();
+			lower = fish.id().toLowerCase(Locale.ROOT).trim();
 		}
 		useAn = !lower.isEmpty() && "aeiou".indexOf(lower.charAt(0)) >= 0;
 		sendDryStreakMessage(fishText, useAn ? "an " : "a ", lastCaught);
 	}
 
-	private void sendItemDryStreakMessage(String item, int lastCaught) {
-		Constant constant = Constant.valueOfId(item);
-		Text itemText = (constant != Constant.DEFAULT) ? constant.TAG.copy() : Text.literal(item);
-
-		String lower = item.toLowerCase(Locale.ROOT).trim();
+	private void sendItemDryStreakMessage(RareCatch rareCatch, int lastCaught) {
+		Text itemText = rareCatch.TAG.copy();
+		String lower = itemText.getString().toLowerCase(Locale.ROOT).trim();
 		boolean useAn = !lower.isEmpty() && "aeiou".indexOf(lower.charAt(0)) >= 0;
 		sendDryStreakMessage(itemText, useAn ? "an " : "a ", lastCaught);
 	}

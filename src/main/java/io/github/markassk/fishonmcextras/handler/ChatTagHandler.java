@@ -1,5 +1,7 @@
 package io.github.markassk.fishonmcextras.handler;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.*;
+import io.github.markassk.fishonmcextras.FOMC.Types.Defaults;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.minecraft.text.Text;
@@ -27,127 +30,80 @@ public class ChatTagHandler {
         return INSTANCE;
     }
 
-    // see Constant.java
-    private static final Constant[] ALLOWED_CONSTANTS = new Constant[] {
-            // Fish Size
-            Constant.BABY,
-            Constant.JUVENILE,
-            Constant.ADULT,
-            Constant.LARGE,
-            Constant.GIGANTIC,
+    private record Tag(Text text, int color) {}
 
-            // Rarity
-            Constant.COMMON,
-            Constant.RARE,
-            Constant.EPIC,
-            Constant.LEGENDARY,
-            Constant.MYTHICAL,
+    private static final Map<String, Tag> KNOWN_TAGS = new LinkedHashMap<>();
 
-            // Event Rarities
-            Constant.SPECIAL,
+    private static void registerTags(EnumLookup<? extends EnumConstant> enumLookup, String format) {
+        enumLookup.getAll().forEach(value -> registerTag(String.format(format, value.name()), value.tag(), value.color()));
+    }
 
-            // Location
-            Constant.CYPRESS_LAKE,
-            Constant.KENAI_RIVER,
-            Constant.LAKE_BIWA,
-            Constant.MURRAY_RIVER,
-            Constant.EVERGLADES,
-            Constant.KEY_WEST,
-            Constant.TOLEDO_BEND,
-            Constant.GREAT_LAKES,
-            Constant.DANUBE_RIVER,
-            Constant.OIL_RIG,
-            Constant.AMAZON_RIVER,
-            Constant.MEDITERRANEAN_SEA,
-            Constant.CAPE_COD,
-            Constant.HAWAII,
-            Constant.LOFOTEN_ISLANDS,
-            Constant.CAIRNS,
+    private static void registerTags(EnumLookup<? extends EnumConstant> enumLookup) {
+        registerTags(enumLookup, "%s");
+    }
 
-            // Variants
-            Constant.NORMAL,
-            Constant.ALBINO,
-            Constant.MELANISTIC,
-            Constant.TROPHY,
-            Constant.FABLED,
+    private static void registerTag(EnumConstant value) {
+        registerTag(value.name(), value.tag(), value.color());
+    }
 
-            // Rare Catches
-            Constant.LIGHTNING_BOTTLE,
-            Constant.INFUSION_CAPSULE,
-            Constant.SHARD,
-            Constant.PROSPECTING_AMULET,
-            // Bigfoot Drops
-            Constant.BIGFOOT_FUR,
-            Constant.BIGFOOT_TOOTH,
-            // Pet
-            Constant.PET,
+    private static void registerTag(String id, Text tag, int color) {
+        KNOWN_TAGS.put(id.toUpperCase(), new Tag(tag, color));
+    }
 
-            // Pet Rating
-            Constant.SICKLY,
-            Constant.BAD,
-            Constant.BELOW_AVERAGE,
-            Constant.AVERAGE,
-            Constant.GOOD,
-            Constant.GREAT,
-            Constant.EXCELLENT,
-            Constant.AMAZING,
-            Constant.PERFECT,
+    static {
+        registerTag(Location.CYPRESS_LAKE);
+        registerTag(Location.KENAI_RIVER);
+        registerTag(Location.LAKE_BIWA);
+        registerTag(Location.MURRAY_RIVER);
+        registerTag(Location.EVERGLADES);
+        registerTag(Location.KEY_WEST);
+        registerTag(Location.TOLEDO_BEND);
+        registerTag(Location.GREAT_LAKES);
+        registerTag(Location.DANUBE_RIVER);
+        registerTag(Location.OIL_RIG);
+        registerTag(Location.AMAZON_RIVER);
+        registerTag(Location.MEDITERRANEAN_SEA);
+        registerTag(Location.CAPE_COD);
+        registerTag(Location.HAWAII);
+        registerTag(Location.LOFOTEN_ISLANDS);
+        registerTag(Location.CAIRNS);
 
-            // Pets
-            Constant.BULLFROG,
-            Constant.BEAR,
-            Constant.FOX,
-            Constant.KANGAROO,
-            Constant.MARSH_RABBIT,
-            Constant.SEA_TURTLE,
-            Constant.DUCK,
-            Constant.EAGLE,
-            Constant.WOLF,
-            Constant.PELICAN,
-            Constant.CAPYBARA,
-            Constant.LYNX,
-            Constant.SHARK,
-            Constant.DOLPHIN,
-            Constant.SHEEP,
-            Constant.KOALA,
+        registerTag(FishVariant.NORMAL);
+        registerTag(FishVariant.ALBINO);
+        registerTag(FishVariant.MELANISTIC);
+        registerTag(FishVariant.TROPHY);
+        registerTag(FishVariant.FABLED);
 
-            // Water Types
-            Constant.FRESHWATER,
-            Constant.SALTWATER,
+        registerTag(PlayerRank.ANGLER);
+        registerTag(PlayerRank.SAILOR);
+        registerTag(PlayerRank.MARINER);
+        registerTag(PlayerRank.CAPTAIN);
+        registerTag(PlayerRank.ADMIRAL);
+        registerTag(PlayerRank.FOE);
 
-            // Ranks
-            Constant.ANGLER,
-            Constant.SAILOR,
-            Constant.MARINER,
-            Constant.CAPTAIN,
-            Constant.ADMIRAL,
-            Constant.FOE,
+        registerTag(WaterType.FRESHWATER);
+        registerTag(WaterType.SALTWATER);
 
-            // Stats
-            Constant.LUCK,
-            Constant.SCALE,
+        registerTags(Climate.LOOKUP);
+        registerTags(Rarity.LOOKUP);
+        registerTags(FishSize.LOOKUP);
+        registerTags(RareCatch.LOOKUP);
+        registerTags(PetType.LOOKUP);
+        registerTags(PetRating.LOOKUP);
 
-            // Climate
-            Constant.SUBTROPICAL,
-            Constant.SUBARCTIC,
-            Constant.SEMI_ARID,
-            Constant.SAVANNA,
-            Constant.CONTINENTAL,
-            Constant.RAINFOREST,
-            Constant.MEDITERRANEAN,
-            Constant.OCEANIC,
-            Constant.MONSOON
-    };
+        registerTag("luck", Text.literal("♣ Luck").withColor(0x80DAC3), 0x80DAC3);
+        registerTag("scale", Text.literal("⚓ Scale").withColor(0x4C88F1), 0x4C88F1);
+    }
 
     private static final Gson GSON = new Gson();
     private static final Pattern TAG_PATTERN = Pattern.compile("\\[([A-Z0-9_]+)\\]");
 
-    private static final Constant[] PET_RARITY_CONSTANTS = new Constant[] {
-            Constant.COMMON,
-            Constant.RARE,
-            Constant.EPIC,
-            Constant.LEGENDARY,
-            Constant.MYTHICAL
+    private static final EnumConstant[] PET_RARITY_CONSTANTS = new EnumConstant[] {
+            Rarity.COMMON,
+            Rarity.RARE,
+            Rarity.EPIC,
+            Rarity.LEGENDARY,
+            Rarity.MYTHICAL
     };
 
     private final FishOnMCExtrasConfig config = FishOnMCExtrasConfig.getConfig();
@@ -234,9 +190,9 @@ public class ChatTagHandler {
         JsonArray newExtra = new JsonArray();
         boolean replacedAnyAllowed = false;
 
-        Constant constant = getConstantOrNull(matcher.group(1));
-        if (isAllowedConstant(constant)) {
-            newExtra.add(JsonParser.parseString(TextHelper.textToJson(constant.TAG.copy())));
+        Tag tag = KNOWN_TAGS.get(matcher.group(1));
+        if (tag != null) {
+            newExtra.add(JsonParser.parseString(TextHelper.textToJson(tag.text)));
             replacedAnyAllowed = true;
         } else {
             JsonObject literal = new JsonObject();
@@ -254,9 +210,9 @@ public class ChatTagHandler {
                 newExtra.add(betweenObj);
             }
 
-            Constant c = getConstantOrNull(matcher.group(1));
-            if (isAllowedConstant(c)) {
-                newExtra.add(JsonParser.parseString(TextHelper.textToJson(c.TAG.copy())));
+            tag = KNOWN_TAGS.get(matcher.group(1));
+            if (tag != null) {
+                newExtra.add(JsonParser.parseString(TextHelper.textToJson(tag.text)));
                 replacedAnyAllowed = true;
             } else {
                 JsonObject literal = new JsonObject();
@@ -292,26 +248,6 @@ public class ChatTagHandler {
         obj.add("extra", newExtra);
 
         return true;
-    }
-
-    private static boolean isAllowedConstant(Constant constant) {
-        if (constant == null) {
-            return false;
-        }
-        for (Constant allowed : ALLOWED_CONSTANTS) {
-            if (allowed == constant) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static Constant getConstantOrNull(String constantName) {
-        try {
-            return Constant.valueOf(constantName);
-        } catch (IllegalArgumentException ignored) {
-            return null;
-        }
     }
 
     private static void copyJsonObject(JsonObject from, JsonObject to) {
@@ -428,9 +364,9 @@ public class ChatTagHandler {
                 }
             }
 
-            Constant rarity = constantFromUnicode(text.charAt(nextIndex));
+            EnumConstant rarity = constantFromUnicode(text.charAt(nextIndex));
             if (rarity != null) {
-                Text bracketTag = Text.literal("[" + rarity.name() + "]").withColor(rarity.COLOR);
+                Text bracketTag = Text.literal("[" + rarity.name() + "]").withColor(rarity.color());
                 newExtra.add(JsonParser.parseString(TextHelper.textToJson(bracketTag)));
                 changed = true;
                 cursor = nextIndex + 1;
@@ -469,10 +405,10 @@ public class ChatTagHandler {
         return -1;
     }
 
-    private static Constant constantFromUnicode(char unicode) {
+    private static EnumConstant constantFromUnicode(char unicode) {
         String unicodeString = String.valueOf(unicode);
-        for (Constant rarity : PET_RARITY_CONSTANTS) {
-            if (rarity.TAG.getString().equals(unicodeString)) {
+        for (EnumConstant rarity : PET_RARITY_CONSTANTS) {
+            if (rarity.tag().getString().equals(unicodeString)) {
                 return rarity;
             }
         }
@@ -504,14 +440,14 @@ public class ChatTagHandler {
         String typedUpper = typed.toUpperCase();
 
         java.util.ArrayList<Suggestion> matches = new java.util.ArrayList<>();
-        for (Constant c : ALLOWED_CONSTANTS) {
-            if (typedUpper.isEmpty() || c.name().startsWith(typedUpper)) {
-                matches.add(new Suggestion(c.name(), c.COLOR));
+        for (var e : KNOWN_TAGS.entrySet()) {
+            if (typedUpper.isEmpty() || e.getKey().startsWith(typedUpper)) {
+                matches.add(new Suggestion(e.getKey(), e.getValue().color));
             }
         }
 
         if (typedUpper.isEmpty() || "ITEM".startsWith(typedUpper)) {
-            matches.add(new Suggestion("item", Constant.DEFAULT.COLOR));
+            matches.add(new Suggestion("item", Defaults.DEFAULT_COLOR));
         }
 
         if (matches.isEmpty()) {

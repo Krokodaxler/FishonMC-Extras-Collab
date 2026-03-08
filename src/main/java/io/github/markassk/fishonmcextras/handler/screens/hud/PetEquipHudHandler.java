@@ -1,7 +1,7 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
-import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetItem;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetRating;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.PetEquipHandler;
 import io.github.markassk.fishonmcextras.handler.ProfileDataHandler;
@@ -40,15 +40,13 @@ public class PetEquipHudHandler {
             float neededXp = profileData.equippedPet.neededXp;
             float percentXp = currentXp / neededXp * 100f;
             float petPercent = profileData.equippedPet.percentPetRating * 100f;
-            Constant ratingTag = Pet.getConstantFromPercent(profileData.equippedPet.percentPetRating);
+            PetRating rating = PetRating.LOOKUP.valueOfPercent(profileData.equippedPet.percentPetRating);
             String petItemId = profileData.equippedPet.petItem;
-            Constant petItemConstant = petItemId != null ? Constant.valueOfId(petItemId) : null;
+            PetItem petItem = petItemId != null ? PetItem.LOOKUP.valueOfId(petItemId) : null;
             Text petItemText = null;
             if (petItemId != null) {
-                if (petItemConstant != null
-                        && petItemConstant != Constant.DEFAULT
-                        || Constant.DEFAULT.ID.equals(petItemId)) {
-                    petItemText = petItemConstant != null ? petItemConstant.TAG : null;
+                if (petItem != PetItem.UNKNOWN) {
+                    petItemText = petItem.TAG;
                 } else {
                     petItemText = Text.literal(petItemId);
                 }
@@ -107,16 +105,16 @@ public class PetEquipHudHandler {
             if (config.petEquipTracker.activePetHUDOptions.ratingDisplayType == RatingDisplayType.ALL) {
                 textList.add(TextHelper.concat(
                         Text.literal("ʀᴀᴛɪɴɢ ").formatted(Formatting.GRAY),
-                        ratingTag.TAG,
+                        rating.TAG,
                         Text.literal(" "),
                         Text.literal("(").formatted(Formatting.DARK_GRAY),
-                        Text.literal(TextHelper.fmt(petPercent, 1) + "%").withColor(ratingTag.COLOR),
+                        Text.literal(TextHelper.fmt(petPercent, 1) + "%").withColor(rating.COLOR),
                         Text.literal(")").formatted(Formatting.DARK_GRAY)));
             } else if (config.petEquipTracker.activePetHUDOptions.ratingDisplayType == RatingDisplayType.SHORT) {
                 textList.add(TextHelper.concat(
                         Text.literal("ʀᴀᴛɪɴɢ ").formatted(Formatting.GRAY),
                         Text.literal("(").formatted(Formatting.DARK_GRAY),
-                        Text.literal(TextHelper.fmt(petPercent, 1) + "%").withColor(ratingTag.COLOR),
+                        Text.literal(TextHelper.fmt(petPercent, 1) + "%").withColor(rating.COLOR),
                         Text.literal(")").formatted(Formatting.DARK_GRAY)));
             }
             if (petItemText != null) {

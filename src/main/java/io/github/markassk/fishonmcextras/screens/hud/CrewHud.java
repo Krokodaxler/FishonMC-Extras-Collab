@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.common.Theming;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.*;
@@ -10,7 +10,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
 public class CrewHud {
     public void render(DrawContext drawContext, MinecraftClient client) {
@@ -22,7 +21,7 @@ public class CrewHud {
 
         drawContext.getMatrices().push();
         try {
-            if(CrewHandler.instance().isCrewInRenderDistance && BossBarHandler.instance().currentLocation != Constant.SPAWNHUB && CrewHandler.instance().crewState == CrewHandler.CrewState.HASCREW) {
+            if(CrewHandler.instance().isCrewInRenderDistance && BossBarHandler.instance().currentLocation != Location.SPAWNHUB && CrewHandler.instance().crewState == CrewHandler.CrewState.HASCREW) {
                 // Get screen size
                 int screenWidth = client.getWindow().getScaledWidth();
                 int screenHeight = client.getWindow().getScaledHeight();

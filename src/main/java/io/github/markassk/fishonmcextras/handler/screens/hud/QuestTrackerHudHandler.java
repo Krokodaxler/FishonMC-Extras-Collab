@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.common.Theming;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.BossBarHandler;
@@ -42,11 +42,11 @@ public class QuestTrackerHudHandler {
         }
 
         if(QuestHandler.instance().isQuestInitialized()) {
-            List<QuestHandler.Quest> activeQuests = BossBarHandler.instance().currentLocation == Constant.SPAWNHUB ? QuestHandler.instance().activeQuests.get(Constant.CYPRESS_LAKE) : QuestHandler.instance().activeQuests.get(BossBarHandler.instance().currentLocation);
+            List<QuestHandler.Quest> activeQuests = BossBarHandler.instance().currentLocation == Location.SPAWNHUB ? QuestHandler.instance().activeQuests.get(Location.CYPRESS_LAKE) : QuestHandler.instance().activeQuests.get(BossBarHandler.instance().currentLocation);
 
             textList.add(TextHelper.concat(
                     Text.literal("ʟᴏᴄ.: ").formatted(Formatting.GRAY),
-                    BossBarHandler.instance().currentLocation == Constant.SPAWNHUB ? Constant.CYPRESS_LAKE.TAG : BossBarHandler.instance().currentLocation.TAG
+                    BossBarHandler.instance().currentLocation == Location.SPAWNHUB ? Location.CYPRESS_LAKE.TAG : BossBarHandler.instance().currentLocation.TAG
             ));
 
             if(activeQuests != null) {
@@ -70,7 +70,7 @@ public class QuestTrackerHudHandler {
                                 Text.literal("#").formatted(Formatting.GRAY),
                                 Text.literal(String.valueOf(quest.slot)).formatted(Formatting.GRAY),
                                 Text.literal(": ").formatted(Formatting.GRAY),
-                                quest.goal.TAG,
+                                quest.getGoalEnum().tag(),
                                 Text.literal(" (").formatted(Formatting.GRAY),
                                 Text.literal(String.valueOf(quest.progress)).formatted(Formatting.YELLOW),
                                 Text.literal("/").formatted(Formatting.GRAY),

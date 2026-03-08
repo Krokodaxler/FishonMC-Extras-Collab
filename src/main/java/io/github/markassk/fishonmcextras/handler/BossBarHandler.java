@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.mixin.BossBarHudAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ClientBossBar;
@@ -15,7 +15,7 @@ public class BossBarHandler {
     public String weather = "";
     public String timeSuffix = "";
     public String temperature = "";
-    public Constant currentLocation = Constant.UNKNOWN;
+    public Location currentLocation = Location.UNKNOWN;
 
     public static BossBarHandler instance() {
         if (INSTANCE == null) {

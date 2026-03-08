@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetType;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -58,8 +59,8 @@ public class PetCalculatorHandler {
             Pet leftPet = selectedPet[PetList.LEFT.id];
             Pet rightPet = selectedPet[PetList.RIGHT.id];
 
-            Constant pet = leftPet.pet;
-            Constant rarity = getUpgradedRarity(leftPet.rarity);
+            PetType pet = leftPet.pet;
+            Rarity rarity = leftPet.rarity.next();
 
             float rarityMultiplierBefore = getRarityMultiplier(leftPet.rarity);
             float rarityMultiplierAfter = getRarityMultiplier(rarity);
@@ -83,17 +84,7 @@ public class PetCalculatorHandler {
         }
     }
 
-    private Constant getUpgradedRarity(Constant rarity) {
-        return switch (rarity) {
-            case COMMON -> Constant.RARE;
-            case RARE -> Constant.EPIC;
-            case EPIC -> Constant.LEGENDARY;
-            case LEGENDARY -> Constant.MYTHICAL;
-            default -> Constant.DEFAULT;
-        };
-    }
-
-    private float getRarityMultiplier(Constant rarity) {
+    private float getRarityMultiplier(Rarity rarity) {
         return switch (rarity) {
             case COMMON -> 1f;
             case RARE -> 2f;

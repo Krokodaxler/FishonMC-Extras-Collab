@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
@@ -13,14 +13,14 @@ public class Chummer extends FOMCItem {
     public final float timer;
     public final float bitespeed;
     public final CustomModelDataComponent customModelData;
-    public final Constant rarity;
+    public final Rarity rarity;
 
     private Chummer(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.DEFAULT);
+        super(type, Rarity.UNKNOWN);
         this.timer = nbtCompound.getFloat("timer");
         this.bitespeed = nbtCompound.getFloat("bitespeed");
         this.customModelData = customModelData;
-        this.rarity = Constant.valueOfId(nbtCompound.getString("rarity"));
+        this.rarity = Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity"));
     }
 
     public static Chummer getChummer(ItemStack itemStack, String type) {

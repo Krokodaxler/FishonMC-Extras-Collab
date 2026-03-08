@@ -1,7 +1,6 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
-import io.github.markassk.fishonmcextras.FOMC.LocationInfo;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.FOMC.Types.Armor;
 import io.github.markassk.fishonmcextras.FOMC.Types.FOMCItem;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
@@ -15,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -28,6 +26,44 @@ import java.util.Objects;
 public class ArmorHandler {
     private static ArmorHandler INSTANCE = new ArmorHandler();
     private final FishOnMCExtrasConfig config = FishOnMCExtrasConfig.getConfig();
+
+    public enum CustomArmorQuality {
+        BROKEN(Text.literal("ʙʀᴏᴋᴇɴ").withColor(0xFF74403B)),
+        TORN(Text.literal("ᴛᴏʀɴ").withColor(0xFFFF5555)),
+        DAMAGED(Text.literal("ᴅᴀᴍᴀɢᴇᴅ").withColor(0xFFFCFC54)),
+        BLEMISHED(Text.literal("ʙʟᴇᴍɪsʜᴇᴅ").withColor(0xFFFCA800)),
+        WELL_WORN(Text.literal("ᴡᴇʟʟ ᴡᴏʀɴ").withColor(0xFF54FC54)),
+        USED(Text.literal("ᴜsᴇᴅ").withColor(0xFF00A800)),
+        MINT(Text.literal("ᴍɪɴᴛ").withColor(0xFF54FCFC)),
+        SUBLIME(Text.literal("sᴜʙʟɪᴍᴇ").withColor(0xFFFC54FC)),
+        SUPERIOR(Text.literal("sᴜᴘᴇʀɪᴏʀ").withColor(0xFFA800A8));
+
+        public final Text tag;
+
+        CustomArmorQuality(Text tag) {
+            this.tag = tag;
+        }
+
+        public static CustomArmorQuality valueOfQuality(int quality) {
+            if (quality <= 1)
+                return BROKEN;
+            if (quality < 40)
+                return TORN;
+            if (quality < 50)
+                return DAMAGED;
+            if (quality < 60)
+                return BLEMISHED;
+            if (quality < 70)
+                return WELL_WORN;
+            if (quality < 80)
+                return USED;
+            if (quality < 90)
+                return MINT;
+            if (quality < 100)
+                return SUBLIME;
+            return SUPERIOR;
+        }
+    }
 
     public ItemStack currentChestplateItem = Items.AIR.getDefaultStack();
     public ItemStack currentLeggingsItem = Items.AIR.getDefaultStack();
@@ -99,10 +135,9 @@ public class ArmorHandler {
             this.currentChestplate = null;
         }
 
-        if (BossBarHandler.instance().currentLocation != Constant.DEFAULT
-                && BossBarHandler.instance().currentLocation != Constant.CREW_ISLAND) {
-            String currentLocationClimate = LocationInfo
-                    .valueOfId(BossBarHandler.instance().currentLocation.ID).CLIMATE.ID;
+        if (BossBarHandler.instance().currentLocation != Location.UNKNOWN
+                && BossBarHandler.instance().currentLocation != Location.CREW_ISLAND) {
+            String currentLocationClimate = BossBarHandler.instance().currentLocation.CLIMATE.ID;
             this.isWrongChestplateClimate = currentChestplate != null
                     && !Objects.equals(currentChestplate.climate.ID, currentLocationClimate);
             this.isWrongLeggingsClimate = currentLeggings != null
@@ -155,7 +190,7 @@ public class ArmorHandler {
 
                 Armor armor = Armor.getArmor(itemStack);
                 if (armor != null && armor.identified) {
-                    Text emptyLine = getTextRarity(armor.rarity).TAG;
+                    Text emptyLine = armor.rarity.LORE_TAG;
 
                     int slot = textList.size() - (MinecraftClient.getInstance().options.advancedItemTooltips ? 9 : 7);
                     if (armor.armorBonuses.get(4).rolled)
@@ -305,40 +340,6 @@ public class ArmorHandler {
         return amount;
     }
 
-    private Constant getTextRarity(Constant rarity) {
-        return switch (rarity) {
-            case COMMON -> Constant.TEXTCOMMON;
-            case RARE -> Constant.TEXTRARE;
-            case EPIC -> Constant.TEXTEPIC;
-            case LEGENDARY -> Constant.TEXTLEGENDARY;
-            case MYTHICAL -> Constant.TEXTMYTHICAL;
-            case SPECIAL -> Constant.TEXTSPECIAL;
-            default -> Constant.TEXTDEFAULT;
-        };
-    }
-
-    private Constant getConstantFromQuality(int quality) {
-        if (quality == 1)
-            return Constant.BROKEN;
-        else if (quality < 40)
-            return Constant.TORN;
-        else if (quality < 50)
-            return Constant.DAMAGED;
-        else if (quality < 60)
-            return Constant.BLEMISHED;
-        else if (quality < 70)
-            return Constant.WELL_WORN;
-        else if (quality < 80)
-            return Constant.USED;
-        else if (quality < 90)
-            return Constant.MINT;
-        else if (quality < 100)
-            return Constant.SUBLIME;
-        else if (quality >= 100)
-            return Constant.SUPERIOR;
-        return Constant.DEFAULT;
-    }
-
     private void updateLore(ItemStack stack) {
         LoreComponent loreComponent = stack.get(DataComponentTypes.LORE);
         NbtCompound nbtCompound = ItemStackHelper.getNbt(stack);
@@ -349,7 +350,7 @@ public class ArmorHandler {
             return;
 
         int quality = nbtCompound.getInt("quality");
-        Constant qualityConstant = getConstantFromQuality(quality);
+        CustomArmorQuality customQuality = CustomArmorQuality.valueOfQuality(quality);
 
         List<Text> lines = new ArrayList<>(loreComponent.lines());
         boolean changed = false;
@@ -362,16 +363,15 @@ public class ArmorHandler {
                 continue;
             }
 
-            if (lineText.contains(qualityConstant.TAG.getString())) {
+            if (lineText.contains(customQuality.tag.getString())) {
                 continue;
             }
 
             MutableText newLine = Text.empty().setStyle(line.getStyle());
 
             Armor armor = Armor.getArmor(stack);
-            Constant rarityPrefix = getTextRarity(armor.rarity);
 
-            Text rarityPrefixText = rarityPrefix.TAG.copy()
+            Text rarityPrefixText = armor.rarity.LORE_TAG.copy()
                     .setStyle(net.minecraft.text.Style.EMPTY
                             .withColor(Formatting.WHITE)
                             .withItalic(false)
@@ -384,8 +384,8 @@ public class ArmorHandler {
                             .withColor(Formatting.DARK_GRAY)
                             .withItalic(false));
 
-            MutableText qualityText = qualityConstant.TAG.copy().setStyle(
-                    qualityConstant.TAG.getStyle()
+            MutableText qualityText = customQuality.tag.copy().setStyle(
+                    customQuality.tag.getStyle()
                             .withItalic(false)
                             .withBold(false)
                             .withStrikethrough(false)

@@ -6,7 +6,7 @@ import com.jagrosh.discordipc.IPCListener;
 import com.jagrosh.discordipc.entities.*;
 import com.jagrosh.discordipc.entities.pipe.PipeStatus;
 import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.util.ExtendedRichPresence;
@@ -128,7 +128,7 @@ public class DiscordHandler {
     private RichPresence buildPresence() {
         String state = TabHandler.instance().isInstance
                 ? "Fishing at: "
-                    + (StaffHandler.instance().isVanished ? Constant.CYPRESS_LAKE.TAG.getString() : BossBarHandler.instance().currentLocation.TAG.getString())
+                    + (StaffHandler.instance().isVanished ? Location.CYPRESS_LAKE.TAG.getString() : BossBarHandler.instance().currentLocation.TAG.getString())
                     + " (i"
                     + (StaffHandler.instance().isVanished ? "1" : TabHandler.instance().instance)
                     + ")"

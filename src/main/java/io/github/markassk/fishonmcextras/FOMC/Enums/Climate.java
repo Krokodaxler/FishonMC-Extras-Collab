@@ -1,11 +1,11 @@
-package io.github.markassk.fishonmcextras.FOMC;
+package io.github.markassk.fishonmcextras.FOMC.Enums;
 
-import io.github.markassk.fishonmcextras.FOMC.Types.Defaults;
 import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.minecraft.text.Text;
 
-public enum ClimateConstant {
-    // Climate
+import static io.github.markassk.fishonmcextras.FOMC.Types.Defaults.DEFAULT_COLOR;
+
+public enum Climate implements EnumConstant {
     SUBTROPICAL("subtropical", TextHelper.concat(
             Text.literal("S").withColor(0x4FB07A),
             Text.literal("u").withColor(0x4FB683),
@@ -17,7 +17,8 @@ public enum ClimateConstant {
             Text.literal("i").withColor(0x4BDEBB),
             Text.literal("c").withColor(0x49E7C4),
             Text.literal("a").withColor(0x48EFCD),
-            Text.literal("l").withColor(0x47F7D6)), Defaults.DEFAULT_COLOR),
+            Text.literal("l").withColor(0x47F7D6)),
+            0x47F7D6),
     SUBARCTIC("subarctic", TextHelper.concat(
             Text.literal("S").withColor(0x53A1C1),
             Text.literal("u").withColor(0x64AAC8),
@@ -27,7 +28,8 @@ public enum ClimateConstant {
             Text.literal("c").withColor(0x97C1D8),
             Text.literal("t").withColor(0x98BED3),
             Text.literal("i").withColor(0x98BACF),
-            Text.literal("c").withColor(0x98B7CA)), Defaults.DEFAULT_COLOR),
+            Text.literal("c").withColor(0x98B7CA)),
+            0x98B7CA),
     SEMI_ARID("semi-arid", TextHelper.concat(
             Text.literal("S").withColor(0xE6902E),
             Text.literal("e").withColor(0xE59833),
@@ -37,7 +39,8 @@ public enum ClimateConstant {
             Text.literal("A").withColor(0xE3B14C),
             Text.literal("r").withColor(0xE4B357),
             Text.literal("i").withColor(0xE4B562),
-            Text.literal("d").withColor(0xE4B76D)), Defaults.DEFAULT_COLOR),
+            Text.literal("d").withColor(0xE4B76D)),
+            0xE4B76D),
     SAVANNA("savanna", TextHelper.concat(
             Text.literal("S").withColor(0xBAC153),
             Text.literal("a").withColor(0xC8CB5A),
@@ -45,7 +48,8 @@ public enum ClimateConstant {
             Text.literal("a").withColor(0xE5E068),
             Text.literal("n").withColor(0xE4DF6F),
             Text.literal("n").withColor(0xE3DE77),
-            Text.literal("a").withColor(0xE2DD7E)), Defaults.DEFAULT_COLOR),
+            Text.literal("a").withColor(0xE2DD7E)),
+            0xE2DD7E),
     CONTINENTAL("continental", TextHelper.concat(
             Text.literal("C").withColor(0xA4A9AB),
             Text.literal("o").withColor(0xABB2B2),
@@ -57,7 +61,8 @@ public enum ClimateConstant {
             Text.literal("n").withColor(0xD2DDD8),
             Text.literal("t").withColor(0xD9E2DD),
             Text.literal("a").withColor(0xDFE6E3),
-            Text.literal("l").withColor(0xE5EBE8)), Defaults.DEFAULT_COLOR),
+            Text.literal("l").withColor(0xE5EBE8)),
+            0xE5EBE8),
     RAINFOREST("rainforest", TextHelper.concat(
             Text.literal("R").withColor(0x569579),
             Text.literal("a").withColor(0x4C9E7A),
@@ -68,7 +73,8 @@ public enum ClimateConstant {
             Text.literal("r").withColor(0x2AC983),
             Text.literal("e").withColor(0x2AD086),
             Text.literal("s").withColor(0x2AD68A),
-            Text.literal("t").withColor(0x2ADD8E)), Defaults.DEFAULT_COLOR),
+            Text.literal("t").withColor(0x2ADD8E)),
+            0x2ADD8E),
     MEDITERRANEAN("mediterranean", TextHelper.concat(
             Text.literal("M").withColor(0x80C4EF),
             Text.literal("e").withColor(0x85C6EF),
@@ -82,7 +88,8 @@ public enum ClimateConstant {
             Text.literal("n").withColor(0xA7D4F1),
             Text.literal("e").withColor(0xAAD5F1),
             Text.literal("a").withColor(0xADD7F2),
-            Text.literal("n").withColor(0xB0D8F3)), Defaults.DEFAULT_COLOR),
+            Text.literal("n").withColor(0xB0D8F3)),
+            0xB0D8F3),
     OCEANIC("oceanic", TextHelper.concat(
             Text.literal("O").withColor(0x397FAC),
             Text.literal("c").withColor(0x3A85B4),
@@ -90,7 +97,8 @@ public enum ClimateConstant {
             Text.literal("a").withColor(0x3D92C5),
             Text.literal("n").withColor(0x3995CF),
             Text.literal("i").withColor(0x3599D9),
-            Text.literal("c").withColor(0x319CE3)), Defaults.DEFAULT_COLOR),
+            Text.literal("c").withColor(0x319CE3)),
+            0x319CE3),
     MONSOON("monsoon", TextHelper.concat(
             Text.literal("M").withColor(0x6141DF),
             Text.literal("o").withColor(0x654FE0),
@@ -98,45 +106,35 @@ public enum ClimateConstant {
             Text.literal("s").withColor(0x6E6AE1),
             Text.literal("o").withColor(0x7278E1),
             Text.literal("o").withColor(0x7785E2),
-            Text.literal("n").withColor(0x7B93E2)), Defaults.DEFAULT_COLOR),
-    DEFAULT("default", Text.empty(), Defaults.DEFAULT_COLOR)
-    ;
+            Text.literal("n").withColor(0x7B93E2)),
+            0x7B93E2),
+    UNKNOWN(ID_UNKNOWN, Text.empty(), DEFAULT_COLOR);
+
+    public static final EnumLookup<Climate> LOOKUP = new EnumLookup<>(values());
 
     public final String ID;
     public final Text TAG;
     public final int COLOR;
 
-    ClimateConstant(String id, Text tag, int color) {
+    Climate(String id, Text tag, int color) {
         this.ID = id;
         this.TAG = tag;
         this.COLOR = color;
     }
 
-    public static ClimateConstant valueOfId(String id) {
-        for (ClimateConstant c : values()) {
-            if (c.ID.equals(id.toLowerCase())) {
-                return c;
-            }
-        }
-        return DEFAULT;
+    @Override
+    public String id() {
+        return this.ID;
     }
 
-    public static ClimateConstant valueOfTag(String tag) {
-        for (ClimateConstant c : values()) {
-            if (c.TAG.getString().equals(tag)) {
-                return c;
-            }
-        }
-        return DEFAULT;
+    @Override
+    public Text tag() {
+        return this.TAG;
     }
 
-    public static int colorOfId(String id) {
-        for (ClimateConstant c : values()) {
-            if (c.ID.equals(id.toLowerCase())) {
-                return c.COLOR;
-            }
-        }
-        return Defaults.DEFAULT_COLOR;
+    @Override
+    public int color() {
+        return this.COLOR;
     }
 
     @Override

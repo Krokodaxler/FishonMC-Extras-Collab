@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.FOMC.Types;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
@@ -11,9 +11,9 @@ import java.util.Objects;
 
 public class FOMCItem {
     public final String type;
-    public final Constant rarity;
+    public final Rarity rarity;
 
-    public FOMCItem(String type, Constant rarity) {
+    public FOMCItem(String type, Rarity rarity) {
         this.type = type;
         this.rarity = rarity;
     }
@@ -88,14 +88,14 @@ public class FOMCItem {
         return false;
     }
 
-    public static Constant getRarity(ItemStack itemStack) {
+    public static Rarity getRarity(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.CUSTOM_DATA) != null && itemStack.getItem() != Items.FISHING_ROD) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if(nbtCompound != null) {
-                return Constant.valueOfId(nbtCompound.getString("rarity"));
+                return Rarity.LOOKUP.valueOfId(nbtCompound.getString("rarity"));
             }
         }
-        return Constant.DEFAULT;
+        return Rarity.UNKNOWN;
     }
 
     public static boolean isFish(ItemStack itemStack) {

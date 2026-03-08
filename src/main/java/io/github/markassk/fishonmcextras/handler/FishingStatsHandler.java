@@ -1,6 +1,5 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
 import io.github.markassk.fishonmcextras.FOMC.Types.FOMCItem;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.util.TextHelper;
@@ -25,7 +24,7 @@ public class FishingStatsHandler {
         if(config.fishStatsTooltip.showStats && KeybindHandler.instance().showExtraInfo && FOMCItem.isFOMCItem(itemStack)) {
             FOMCItem item = FOMCItem.getFOMCItem(itemStack);
             if (item != null) {
-                Constant textRarityWindow = getTextRarity(item.rarity);
+                Text textRarityWindow = item.rarity.LORE_TAG;
                 for (int i = textList.size() - 1; i >= 0; i--) {
                     if(textList.get(i).getString().contains("ʟᴜᴄᴋ")) addLine(textList, i, "ᴄʜᴀɴᴄᴇ ꜰᴏʀ ʜɪɢʜᴇʀ ʀᴀʀɪᴛʏ ꜰɪѕʜ", textRarityWindow);
                     if(textList.get(i).getString().contains("sᴄᴀʟᴇ")) addLine(textList, i, "ᴄʜᴀɴᴄᴇ ꜰᴏʀ ʙɪɢɢᴇʀ ꜰɪѕʜ ɢʀᴏᴜᴘѕ", textRarityWindow);
@@ -41,23 +40,12 @@ public class FishingStatsHandler {
         }
     }
 
-    private void addLine(List<Text> textList, int index, String text, Constant textRarityWindow) {
+    private void addLine(List<Text> textList, int index, String text, Text textRarityWindow) {
         textList.add(index + 1, TextHelper.concat(
-                textRarityWindow.TAG,
+                textRarityWindow,
                 Text.literal("    └ ").formatted(Formatting.GRAY),
                 Text.literal(text).formatted(Formatting.DARK_GRAY)
         ));
     }
 
-    private Constant getTextRarity(Constant rarity) {
-        return switch (rarity) {
-            case COMMON -> Constant.TEXTCOMMON;
-            case RARE -> Constant.TEXTRARE;
-            case EPIC -> Constant.TEXTEPIC;
-            case LEGENDARY -> Constant.TEXTLEGENDARY;
-            case MYTHICAL -> Constant.TEXTMYTHICAL;
-            case SPECIAL -> Constant.TEXTSPECIAL;
-            default -> Constant.TEXTDEFAULT;
-        };
-    }
 }

@@ -1,17 +1,16 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.FishSize;
+import io.github.markassk.fishonmcextras.FOMC.Enums.PetRating;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Rarity;
 import io.github.markassk.fishonmcextras.FOMC.Types.Armor;
 import io.github.markassk.fishonmcextras.FOMC.Types.FOMCItem;
 import io.github.markassk.fishonmcextras.FOMC.Types.Fish;
 import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
 
-import java.util.List;
-
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
-import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
@@ -46,12 +45,12 @@ public class ItemMarkerHandler {
 
     public void renderItemMarker(DrawContext drawContext, ItemStack itemStack, int x, int y) {
         // Show Rarity Marker
-        Constant rarity = FOMCItem.getRarity(itemStack);
+        Rarity rarity = FOMCItem.getRarity(itemStack);
         if (FOMCItem.isFish(itemStack)
-                && rarity != Constant.DEFAULT) {
+                && rarity != Rarity.UNKNOWN) {
             if (config.itemMarker.itemSlotMarker.showFishRarityMarker
                     || config.itemMarker.itemSlotMarker.showFishSizeMarker != FishSizeMarkerToggle.OFF) {
-                Constant size = Fish.getSize(itemStack);
+                FishSize size = Fish.getSize(itemStack);
 
                 int alpha = ((int) 255f << 24);
                 drawContext.getMatrices().push();
@@ -76,7 +75,7 @@ public class ItemMarkerHandler {
                 }
             }
         } else if (config.itemMarker.itemSlotMarker.showOtherRarityMarker
-                && rarity != Constant.DEFAULT) {
+                && rarity != Rarity.UNKNOWN) {
             int alpha = ((int) 255f << 24);
             drawContext.getMatrices().push();
             try {
@@ -107,7 +106,7 @@ public class ItemMarkerHandler {
         if (config.itemMarker.itemSlotMarker.showPetPercentMarker != PetPercentMarkerToggle.OFF) {
             Pet pet = Pet.getPet(itemStack);
             if (pet != null) {
-                Constant constant = Pet.getConstantFromPercent(pet.percentPetRating);
+                PetRating constant = PetRating.LOOKUP.valueOfPercent(pet.percentPetRating);
 
                 int alpha = ((int) 255f << 24);
                 drawContext.getMatrices().push();

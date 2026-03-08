@@ -1,6 +1,5 @@
 package io.github.markassk.fishonmcextras.handler;
 
-import io.github.markassk.fishonmcextras.FOMC.LocationInfo;
 import io.github.markassk.fishonmcextras.FOMC.Types.Pet;
 import io.github.markassk.fishonmcextras.FishOnMCExtras;
 import io.github.markassk.fishonmcextras.util.ItemStackHelper;
@@ -172,7 +171,7 @@ public class PetEquipHandler  {
                 && this.isUnequipHandled
                 && this.isEquipHandled
                 && ProfileDataHandler.instance().profileData.equippedPet.location != BossBarHandler.instance().currentLocation
-                && LocationInfo.valueOfId(BossBarHandler.instance().currentLocation.ID).CLIMATE != ProfileDataHandler.instance().profileData.equippedPet.climate;
+                && BossBarHandler.instance().currentLocation.CLIMATE != ProfileDataHandler.instance().profileData.equippedPet.climate;
     }
 
     public enum PetStatus {

@@ -1,6 +1,6 @@
 package io.github.markassk.fishonmcextras.handler.screens.hud;
 
-import io.github.markassk.fishonmcextras.FOMC.Constant;
+import io.github.markassk.fishonmcextras.FOMC.Enums.Location;
 import io.github.markassk.fishonmcextras.FOMC.LevelColors;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.config.TrackerContestHUDConfig;
@@ -37,11 +37,11 @@ public class ContestHudHandler {
         long lastUpdatedMinutes = TimeUnit.MILLISECONDS.toMinutes(timeAgo) % 60;
         long lastUpdatedSeconds = TimeUnit.MILLISECONDS.toSeconds(timeAgo) % 60;
 
-        Text location = Constant.valueOfTag(ContestHandler.instance().location) != null
-                ? Objects.requireNonNull(Constant.valueOfTag(ContestHandler.instance().location)) == Constant.SPAWNHUB
-                        ? Constant.CYPRESS_LAKE.TAG
-                        : Constant.valueOfTag(ContestHandler.instance().location).TAG
-                : Text.literal(ContestHandler.instance().location).formatted(Formatting.WHITE);
+        Text location = switch (Location.LOOKUP.valueOfTag(ContestHandler.instance().location)) {
+            case SPAWNHUB -> Location.CYPRESS_LAKE.TAG;
+            case UNKNOWN -> Text.literal(ContestHandler.instance().location).formatted(Formatting.WHITE);
+            default -> Location.LOOKUP.valueOfTag(ContestHandler.instance().location).TAG;
+        };
 
         // todo: make code more pretty here
         if (!config.contestTracker.useOldContestHUD) {
@@ -49,11 +49,9 @@ public class ContestHudHandler {
                 if (!Objects.equals(ContestHandler.instance().type, "")) {
                     // Check if location matches
                     boolean locationMatches = Objects.equals(
-                            Objects.requireNonNull(
-                                    Constant.valueOfTag(ContestHandler.instance().location)) == Constant.SPAWNHUB
-                                            ? Constant.CYPRESS_LAKE.ID
-                                            : Objects.requireNonNull(
-                                                    Constant.valueOfTag(ContestHandler.instance().location).ID),
+                            Location.LOOKUP.valueOfTag(ContestHandler.instance().location) == Location.SPAWNHUB
+                                    ? Location.CYPRESS_LAKE.ID
+                                    : Location.LOOKUP.valueOfTag(ContestHandler.instance().location).ID,
                             BossBarHandler.instance().currentLocation.ID);
                     // Combine contest header with timer and level range
                     if (ContestHandler.instance().isContest) {
@@ -361,11 +359,9 @@ public class ContestHudHandler {
                             Text.literal("ʟᴏᴄᴀᴛɪᴏɴ: ").formatted(Formatting.GRAY),
                             location));
                     if (Objects.equals(
-                            Objects.requireNonNull(
-                                    Constant.valueOfTag(ContestHandler.instance().location)) == Constant.SPAWNHUB
-                                            ? Constant.CYPRESS_LAKE.ID
-                                            : Objects.requireNonNull(
-                                                    Constant.valueOfTag(ContestHandler.instance().location).ID),
+                            Location.LOOKUP.valueOfTag(ContestHandler.instance().location) == Location.SPAWNHUB
+                                            ? Location.CYPRESS_LAKE.ID
+                                            : Location.LOOKUP.valueOfTag(ContestHandler.instance().location).ID,
                             BossBarHandler.instance().currentLocation.ID)) {
                         if (!Objects.equals(ContestHandler.instance().firstName, "")) {
                             textList.add(Text.empty());
